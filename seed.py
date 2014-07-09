@@ -12,16 +12,29 @@ mykey = 'vgmfi5108akc4ot4rthtrw08'
 
 def connect(mykey):
 	#HTTP GET request for active listings, filter by category string path "Vintage/Clothing"
-	#Need to figure out how to paginate through count
+	#Need to figure out how to paginate through count?
 	#everything after ? is a parameter
 	#urllib creates the url with parameters for me
 
-	parameters = urllib.urlencode({'api_key': mykey, 'limit': 100, 'offset': 0, 'category': 'Vintage/Clothing'})
-	url = '?'.join(['https://openapi.etsy.com/v2/listings/active', parameters])
-	print url
-	resp, content = httplib2.Http().request(url)
-	result = json.loads(content)
-	pprint.pprint(result['results'])
+
+	"""Need to convert this to urlli"""
+	# for p in range(10, 100):
+	# 	resp, content = httplib2.Http().request("https://openapi.etsy.com/v2/listings/active?api_key=vgmfi5108akc4ot4rthtrw08&limit=5&offset=0&category=Vintage%%2FClothing&min_price=%d&max_price=%d" % (p, p+1))
+	# 	print p, json.loads(content)['count']
+
+	p = 0
+	"""Need a new url for each time through this loop, so need to do the urlencode inside the loop (and the join)"""
+	"""This only gets me the count for each 'price bucket', only gives me 100 items per query.
+	Still need to query for items for 100-150, 150-200, and >200, and tab through paginations"""
+	for p in range(10, 100):
+		parameters = urllib.urlencode({'api_key': mykey, 'limit': 100, 'offset': 0, 'category': 'Vintage/Clothing', 'min_price': p, 'max_price': p+1})
+		url = '?'.join(['https://openapi.etsy.com/v2/listings/active', parameters])
+		# print "url__________________%s" % url
+		resp, content = httplib2.Http().request(url)
+		print p, json.loads(content)['count']
+
+
+
 
 
 	# resp, content = httplib2.Http().request("https://openapi.etsy.com/v2/listings/active?api_key=vgmfi5108akc4ot4rthtrw08&limit=5&offset=0&category=Vintage/Clothing")
