@@ -37,17 +37,10 @@ class Listing(Base):
     listing_url = Column(String(100), nullable = False)
     price = Column(String(64), nullable = False)
     materials = Column(String(100), nullable = True)
-    # color is in the params key
-    # color = Column(String(64), nullable = True)
     currency = Column(String(64), nullable = False)
     bust = Column(Integer, nullable = True)
     waist = Column(Integer, nullable = True)
     hip = Column(Integer, nullable = True)
-    natural_waist = Column(Integer, nullable = True)
-    dress_length = Column(Integer, nullable = True)
-    skirt_length = Column(Integer, nullable = True)
-    shirt_length = Column(Integer, nullable = True)
-    arm_length = Column(Integer, nullable = True)
     creation_date = Column(Integer, nullable = True)
     state = Column(String(64), nullable = True)
     last_crawl = Column(Integer, nullable = True) # get epoch time from python, utc, save as int
