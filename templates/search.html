@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block body %}
+	<div class = "row" id = "search">
+		<div class = "col-md-3" id = "search_panel">
+			<h4>Your measurements!</h4>
+			<form role="form">
+			  <div class="form-group">
+			    <label for="bust">Bust</label>
+			    <input type="bust" class="form-control" id="bust" placeholder="Enter bust">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">Waist</label>
+			    <input type="waist" class="form-control" id="waist" placeholder="Enter waist">
+			  </div>
+			  <div class="form-group">
+			    <label for="Hip">Hip</label>
+			    <input type="hip" class="form-control" id="hip" placeholder="Enter hip">
+			  </div>
+			  <button type="submit" class="btn btn-default">Submit</button>
+			</form>
+
+		</div>
+		<div class= "col-md-8 well well-lg" id = "measurement_guide">
+			<h4>A tailored experience. Blurb about how to measure, etc.</h4>
+			<img src="../static/img/measurement_guide.jpg">
+		</div>
+			
+
+	</div> <!-- end of search results -->
+
+
+{% endblock %}
+
+<!-- Need to use AJAX to dynamically load the page. Something about a throwaway template. The event handler will be when Submit is clicked, that will make a call to get the results in the html format??
+$('#measurement_guide')
+[
+<div class=​"col-md-8 well well-lg" id=​"measurement_guide">​…​</div>​
+]
+$('#measurement_guide').html("Results go here")
+[
+<div class=​"col-md-8 well well-lg" id=​"measurement_guide">​Results go here​</div>​
+]
+
+  -->
