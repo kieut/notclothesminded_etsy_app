@@ -35,12 +35,12 @@ class Listing(Base):
     title = Column(String(140), nullable = True)
     description = Column(Text, nullable = True) # LOOK AT THIS, string or text data type
     listing_url = Column(String(100), nullable = False)
-    price = Column(String(64), nullable = False)
+    price = Column(Float, nullable = False)
     materials = Column(String(100), nullable = True)
     currency = Column(String(64), nullable = False)
-    bust = Column(Integer, nullable = True)
-    waist = Column(Integer, nullable = True)
-    hip = Column(Integer, nullable = True)
+    bust = Column(String(64), nullable = True)
+    waist = Column(String(64), nullable = True)
+    hip = Column(String(64), nullable = True)
     creation_date = Column(Integer, nullable = True)
     state = Column(String(64), nullable = True)
     last_crawl = Column(Integer, nullable = True) # get epoch time from python, utc, save as int
