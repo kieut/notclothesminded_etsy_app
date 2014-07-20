@@ -11,6 +11,38 @@ mykey = 'vgmfi5108akc4ot4rthtrw08'
 
 listing_id_list = []
 
+# THE CARAT AT THE END DIDN'T really work, but keep it noted.*hips?[ \t:-]+\D*(?P<hips>[0-9]+)\s*(in|inches|")[^(\r|\n)]
+
+#.*hips?[ \t:-]+\D*(?P<hips>([0-9\.\/\s])+)[ \t]*(in|")
+
+BUST_PATTERNS = [
+    re.compile('.*bust[ \t:-~]+\D*(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")', re.IGNORECASE),
+    re.compile('.*pit[ \t:-~]+\D*(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")', re.IGNORECASE),
+    re.compile('.*chest[ \t:-~]+\D*(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")', re.IGNORECASE),
+    re.compile('.*armpit[ \t:-~]+\D*(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")', re.IGNORECASE),
+    #when size is listed first
+    re.compile('(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")\D*bust', re.IGNORECASE),
+    re.compile('(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")\D*pit', re.IGNORECASE),
+    re.compile('(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")\D*chest', re.IGNORECASE),
+    re.compile('(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")\D*armpit', re.IGNORECASE)
+]
+
+WAIST_PATTERNS = [
+    re.compile('.*waist[ \t:-~]+\D*(?P<waist>([0-9\.\/\s-])+)[ \t]*(in|inches|")', re.IGNORECASE),
+    re.compile('(?P<waist>([0-9\.\/\s-])+)[ \t]*(in|inches|")\D*waist', re.IGNORECASE)
+
+]
+
+HIP_PATTERNS = [
+    re.compile('.*hips?[ \t:-~]+\D*(?P<hips>free|full|sweep|open)', re.IGNORECASE),
+    re.compile('.*hips?[ \t:-~]+\D*(?P<hips>([0-9\.\/\s-])+)[ \t]*(in|inches|")', re.IGNORECASE),
+    # when size is listed first
+    re.compile('.*(?P<hips>free|full|sweep|open)[ \t\D]*hips?', re.IGNORECASE),
+    re.compile('(?P<hips>([0-9\.\/\s-])+)[ \t]*(in|inches|")\D*hips?', re.IGNORECASE)
+]
+
+HIP_OPEN_VARIATIONS = ['full', 'Full', 'free', 'Free', 'FREE' 'Open', 'open', 'sweep', 'Sweep']
+
 
 # pass 'offset' variable to this from main function, figure out where it's left off every time you run function.
 def get_listings(mykey):
