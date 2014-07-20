@@ -19,40 +19,43 @@ Base.query = db_session.query_property()
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key = True)
-    first_name = Column(String(64), nullable = True)
-    surname = Column(String(64), nullable = True)
-    email = Column(String(64), nullable = True)
-    password = Column(String(64), nullable = True)
-    age = Column(Integer, nullable=True)
-    zipcode = Column(String(15), nullable=True)
+    id = Column(Integer, primary_key=True)
+    first_name = Column(String(64), nullable=False)
+    surname = Column(String(64), nullable=False)
+    email = Column(String(64), nullable=False)
+    password = Column(String(64), nullable=False)
+    age = Column(Integer, nullable=False)
+    zipcode = Column(String(15), nullable=False)
 
 
 class Listing(Base):
     __tablename__= "listings"
 
-    id = Column(Integer, primary_key = True)
-    title = Column(String(140), nullable = True)
-    description = Column(Text, nullable = True) # LOOK AT THIS, string or text data type
-    listing_url = Column(String(100), nullable = False)
-    price = Column(Float, nullable = False)
-    materials = Column(String(100), nullable = True)
-    currency = Column(String(64), nullable = False)
-    bust = Column(String(64), nullable = True)
-    waist = Column(String(64), nullable = True)
-    hip = Column(String(64), nullable = True)
-    creation_date = Column(Integer, nullable = True)
-    state = Column(String(64), nullable = True)
-    last_crawl = Column(Integer, nullable = True) # get epoch time from python, utc, save as int
-    last_modified = Column(Integer, nullable = False) # already displayed in epoch time, just save as an int
+    id = Column(Integer, primary_key=True)
+    title = Column(String(140), nullable=False)
+    description = Column(Text, nullable=False) # LOOK AT THIS, string or text data type
+    listing_url = Column(String(100), nullable=False)
+    price = Column(Float, nullable=False)
+    materials = Column(String(100), nullable=False)
+    currency = Column(String(64), nullable=False)
+    min_bust = Column(Float, nullable=False)
+    max_bust = Column(Float, nullable=False)
+    min_waist = Column(Float, nullable=False)
+    max_waist = Column(Float, nullable=False)
+    min_hip = Column(Float, nullable=False)
+    max_hip = Column(Float, nullable=False)
+    creation_date = Column(Integer, nullable=False)
+    state = Column(String(64), nullable=False)
+    last_crawl = Column(Integer, nullable=False) # get epoch time from python, utc, save as int
+    last_modified = Column(Integer, nullable=False) # already displayed in epoch time, just save as an int
 
 class UserFavorite(Base):
     __tablename__ = "favorites"
 
-    id = Column(Integer, primary_key = True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable = True)
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     #ForeignKey says it references another column in another table
-    listing_id = Column(Integer, ForeignKey("listings.id"), nullable = True)
+    listing_id = Column(Integer, ForeignKey("listings.id"), nullable=False)
 
     user = relationship("User", backref=backref("favorites", order_by=id))
     listing = relationship("Listing", backref=backref("favorites", order_by=id))
@@ -61,13 +64,13 @@ class UserFavorite(Base):
 class ListingImage(Base):
     __tablename__= "images"
 
-    id = Column(Integer, primary_key = True)
-    listing_image_id = Column(Integer(64), nullable = False)
-    listing_id = Column(Integer, ForeignKey("listings.id"), nullable = False)
-    url_170x135 = Column(String(200), nullable = True)
-    url_570xN = Column(String(200), nullable = True)
-    url_75x75 = Column(String(200), nullable = True)
-    url_fullxfull = Column(String(200), nullable = True)
+    id = Column(Integer, primary_key=True)
+    listing_image_id = Column(Integer(64), nullable=True)
+    listing_id = Column(Integer, ForeignKey("listings.id"), nullable=True)
+    url_170x135 = Column(String(200), nullable=True)
+    url_570xN = Column(String(200), nullable=True)
+    url_75x75 = Column(String(200), nullable=True)
+    url_fullxfull = Column(String(200), nullable=True)
 
     listing = relationship("Listing", backref=backref("listings", order_by=id))
 

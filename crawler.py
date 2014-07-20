@@ -1,8 +1,8 @@
-from model import db_session
 import HTMLParser
 import model
 from etsy import get_listings, get_images
 from parser import ListingParser
+import time
 
 def convert_listings(etsy_listing):
 	description = etsy_listing['description']
@@ -15,7 +15,7 @@ def convert_listings(etsy_listing):
 	hip = parser.GetHip()
 	print "*******end of description*******"
 
-	if (bust is not None and waist is not None and hip is not None):# or (bust is not None and waist is not None) or (bust is not None):
+	if bust is not None and waist is not None:
 
 	    return etsy_listing['listing_id'], model.Listing(
 	    	title=etsy_listing['title'],
@@ -24,10 +24,14 @@ def convert_listings(etsy_listing):
 	    	price=float(etsy_listing['price']),
 	    	materials=",".join(etsy_listing['materials']),
 	    	currency=etsy_listing['currency_code'],
-	    	bust=bust, waist=waist, hip=hip,
+	    	min_bust=bust[0], max_bust=bust[1],
+	    	min_waist=waist[0], max_waist=waist[0],
+	    	min_hip=hip[0] if hip else 0,
+	    	max_hip=hip[1] if hip else 100,
 	    	creation_date=etsy_listing['creation_tsz'],
 	    	state=etsy_listing['state'],
-	    	last_modified=etsy_listing['last_modified_tsz'])
+	    	last_modified=etsy_listing['last_modified_tsz'],
+	    	last_crawl=time.time())
 
 def convert_images(image):
 	# print "*******image results list*****%s" % images_list
@@ -42,16 +46,24 @@ def convert_images(image):
 def main(db_session):
     """Map objects to database from here so can move functions around"""
     listing_id_list = []
-    listings_dict = get_listings()
-    listings = listings_dict['results'] # this is a list of listing objects
-
-#for every listing in results is an object with attributes
-    for etsy_listing in listings:
+    def HandleListing(etsy_listing):
     	result = convert_listings(etsy_listing)
     	if result is not None:
-			listing_id, listing = result
-			listing_id_list.append(listing_id)
-			db_session.add(listing)
+    		listing_id, listing = result
+    		listing_id_list.append(listing_id)
+    		db_session.add(listing)
+
+    get_listings(HandleListing)
+    #listings_dict = get_listings()
+    #listings = listings_dict['results'] # this is a list of listing objects
+
+#for every listing in results is an object with attributes
+    #for etsy_listing in listings:
+    #	result = convert_listings(etsy_listing)
+    #	if result is not None:
+	#		listing_id, listing = result
+	#		listing_id_list.append(listing_id)
+	#		db_session.add(listing)
 
 
     images = get_images(listing_id_list)
@@ -62,5 +74,5 @@ def main(db_session):
     db_session.commit()
 
 if __name__ == "__main__":
-    s= model.db_session()
+    s = model.db_session()
     main(s)

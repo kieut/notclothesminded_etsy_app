@@ -4,7 +4,7 @@ import urllib
 
 mykey = 'vgmfi5108akc4ot4rthtrw08'
 
-def get_listings():
+def get_listings(ListingHandler):
     #HTTP GET request for active listings, filter by category string path "Vintage/Clothing"
     #Need to loop through paginations.
     #everything after '?'' is a parameter
@@ -13,15 +13,16 @@ def get_listings():
     """Need a new url for each time through this loop, so need to do the urlencode inside the loop (and the join)"""
     """This only gets me the count for each 'price bucket', only gives me 100 items per query.
     Still need to query for items for 100-150, 150-200, and >200, and tab through paginations"""
-    p = 0
-
-    for p in range(100, 120):
-        parameters = urllib.urlencode({'api_key': mykey, 'limit': 100, 'offset': 0, 'category': 'Vintage/Clothing', 'min_price': p, 'max_price': p+1})
+    for price in range(120, 130):
+        parameters = urllib.urlencode({'api_key': mykey, 'limit': 100, 
+        'offset': 0, 'category': 'Vintage/Clothing/Dress', 
+        'min_price': price, 'max_price': price+1})
         url = '?'.join(['https://openapi.etsy.com/v2/listings/active', parameters])
         resp, content = httplib2.Http().request(url)
         # print p, json.loads(content)['count']
         result = json.loads(content)
-    return result
+        for r in result['results']:
+            ListingHandler(r)
 
 def get_images(listing_id_list):
     """Need to only grab images for the items that have all measurements, pull from list"""
