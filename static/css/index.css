@@ -1,0 +1,57 @@
+body {
+	margin:0;
+	padding:0;
+	font-family: 'Helvetica';
+	padding-top: 0;
+/*	background-image:url("../img/etsy_favs.png");*/
+}
+
+/*.index_ctn {
+	position: relative;
+}*/
+
+/*body {
+	margin:0;
+	padding:0;
+	background:#fff; 	
+}*/
+
+.listings {
+	width:100%; 
+	height:100%;  
+	/*width:300px; */
+	/*height:300px; */
+	background-image: url("../img/dark_listings.png");
+	background-position: center;
+	/*background-repeat: repeat-x;*/
+	/*background-image:url("../img/etsy_favs.png");*/
+}
+
+.welcome_jumbotron {
+	/*margin-top: 200px;*/
+	background-image: url("../img/70s.jpg");
+	background-position: center;
+	background-size: 100%;
+    background-repeat: no-repeat;
+    width: 60%;
+  	height: 50%;
+  	min-width: 350px;
+  	max-height: 300px;
+  	overflow: auto;
+  	margin: auto;
+  	position: absolute;
+  	top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.welcome_jumbotron>h1{
+	color: white;
+	font-family: Helvetica;
+}
+
+.welcome_jumbotron>p{
+	color: white;
+	font-family: Helvetica;
+}
+
+
+

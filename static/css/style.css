@@ -1,0 +1,67 @@
+body {
+	font-family: 'Helvetica';
+	padding-top: 0;
+	background-image:url("../img/tree_bark.png");
+}
+
+.logo {
+	height: 40px;
+	width: 40px;
+}
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.search_panel {
+	background-color: white;
+	border-radius: 7px;
+	margin-left: 15px;
+}
+
+.results {
+	background-color:white;
+	border-radius: 7px;
+	margin-left: 15px
+}
+
+.form-signin .form-signin-heading,
+.form-signin {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.submit-btn {
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+.range-input {
+	margin-bottom: 10px;
+}
