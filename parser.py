@@ -72,13 +72,6 @@ HIP_PATTERNS = [
 ]
 
 
-# HIP_OPEN_VARIATIONS = [
-#     'full', 'Full', 'FULL',
-#     'free', 'Free', 'FREE'
-#     'open', 'Open', 'OPEN',
-#     'sweep', 'Sweep', 'SWEEP'
-# ]
-
 def ParseNumber(number_string):
     #Given a string containing a number, parses out match groups: dec, num, den
     # Convert the fractions to floats for easier storage. 
@@ -159,8 +152,7 @@ class ListingParser(object):
             return min_val, max_val
 
     def GetHip(self):
-        """This is the next pattern, need to save all free/full/sweep as the same thing
-        in database, like free. Need to only allow user to input one type, 'free'."""
+        """Saving all open hip variations as min_val:0, and max_val: 100"""
 
         # print "\n*****listing description:"
         # print result
