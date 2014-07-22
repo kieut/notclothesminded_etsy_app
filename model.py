@@ -27,13 +27,14 @@ class User(Base):
     age = Column(Integer, nullable=False)
     zipcode = Column(String(15), nullable=False)
 
+"""Need to refactor and track listing_ids instead for image API calls"""
 
 class Listing(Base):
     __tablename__= "listings"
 
     id = Column(Integer, primary_key=True)
     title = Column(String(140), nullable=False)
-    description = Column(Text, nullable=False) # LOOK AT THIS, string or text data type
+    description = Column(Text, nullable=False)
     listing_url = Column(String(100), nullable=False)
     price = Column(Float, nullable=False)
     materials = Column(String(100), nullable=False)

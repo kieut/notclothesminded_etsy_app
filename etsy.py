@@ -5,12 +5,6 @@ import urllib
 mykey = 'vgmfi5108akc4ot4rthtrw08'
 
 def get_listings(ListingHandler):
-    #HTTP GET request for active listings, filter by category string path "Vintage/Clothing"
-    #Need to loop through paginations.
-    #everything after '?'' is a parameter
-    #urllib creates the url with parameters for me
-
-    """Need a new url for each time through this loop, so need to do the urlencode inside the loop (and the join)"""
     """This only gets me the count for each 'price bucket', only gives me 100 items per query.
     Still need to query for items for 100-150, 150-200, and >200, and tab through paginations"""
     def get_page(offset, price):
