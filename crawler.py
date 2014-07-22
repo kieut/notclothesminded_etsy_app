@@ -3,12 +3,14 @@ import model
 from etsy import get_listings, get_images
 from parser import ListingParser
 import time
+import sys
+import traceback
 
 def convert_listings(etsy_listing):
 	description = etsy_listing['description']
 	item = HTMLParser.HTMLParser().unescape(description)
 	print "\n*****listing description:"
-	print item
+	print item.encode('ascii', errors='ignore')
 	parser = ListingParser(item)
 	bust = parser.GetBust()
 	waist = parser.GetWaist()
@@ -44,34 +46,33 @@ def convert_images(image):
         url_fullxfull=image['url_fullxfull'])
 
 def main(db_session):
-    """Map objects to database from here so can move functions around"""
     listing_id_list = []
     def HandleListing(etsy_listing):
-    	result = convert_listings(etsy_listing)
+    	try:
+    		result = convert_listings(etsy_listing)
+    	except Exception:
+    		print >>sys.stderr, 'Invalid listing: ', etsy_listing
+    		traceback.print_exc()
+    		return
+
     	if result is not None:
     		listing_id, listing = result
     		listing_id_list.append(listing_id)
     		db_session.add(listing)
 
+    print >>sys.stderr, 'Getting listings: ', time.time()
     get_listings(HandleListing)
-    #listings_dict = get_listings()
-    #listings = listings_dict['results'] # this is a list of listing objects
 
-#for every listing in results is an object with attributes
-    #for etsy_listing in listings:
-    #	result = convert_listings(etsy_listing)
-    #	if result is not None:
-	#		listing_id, listing = result
-	#		listing_id_list.append(listing_id)
-	#		db_session.add(listing)
+    if False:
+    	print >>sys.stderr, 'Getting images: ', time.time()
+    	for listing_id in listing_id_list:
+   		 	images = get_images(listing_id)
+   		 	images_list = images['results']
+   		 	for image in images_list:
+				db_session.add(convert_images(image))
 
-
-    images = get_images(listing_id_list)
-    images_list = images['results']
-    for image in images_list:
-		db_session.add(convert_images(image))
-
-    db_session.commit()
+	print >>sys.stderr, 'Comitting to DB: ', time.time()
+	db_session.commit()
 
 if __name__ == "__main__":
     s = model.db_session()
