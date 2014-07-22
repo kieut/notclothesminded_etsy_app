@@ -1,15 +1,56 @@
 {% extends 'base.html' %}
 
 {% block body %}
-	<div class = "row" id = "search">
-		<div class = "col-md-3" id = "search_panel">
+	<div class = "row">
+		<div class = "col-sm-3 search_panel">
 			<h4>Your measurements!</h4>
+
 			<form role="form">
+
 			  <div class="form-group">
 			    <label for="description">Description</label>
-			    <input type="bust" class="form-control" id="bust" placeholder="Search for dresses">
+			    <input type="bust" class="form-control" id="bust" placeholder="Search for dresses.">
 			  </div>
-			<form role="form">
+
+<!-- 			  <form role= "form form-inline"> -->
+			  <div class="form-group">
+			    	<label for="bust">Bust</label>
+			    	<!-- <div> -->
+				    	<input type="bust" class="form-control col-sm-1 range-input" id="min-bust" placeholder="min-bust">
+				    	<input type="bust" class="form-control col-sm-1 range-input" id="max-bust" placeholder="max-bust">
+					<!-- </div> -->
+				</div>
+              <!-- </form> -->
+
+              <!-- <form role= "form form-inline"> -->
+              <div class="form-group">
+                    <label for="waist">Waist</label>
+                    <!-- <div> -->
+                        <input type="min-waist" class="form-control col-sm-1 range-input" id="min-waist" placeholder="min-waist">
+                        <input type="max-waist" class="form-control col-sm-1 range-input" id="max-waist" placeholder="max-waist">
+                    <!-- </div> -->
+                </div>
+              <!-- </form> -->
+
+              <!-- <form role= "form form-inline"> -->
+              <div class="form-group">
+                    <label for="waist">Hips</label>
+                    <!-- <div> -->
+                        <input type="min-hip" class="form-control col-sm-1 range-input" id="min-hip" placeholder="min-hip">
+                        <input type="max-waist" class="form-control col-sm-1 range-input" id="max-hip" placeholder="max-hip">
+                    <!-- </div> -->
+                </div>
+                <button type="submit" class="btn btn-default submit-btn">Submit</button>
+              </form>
+          </div>
+
+          <div class= "col-sm-8 well well-lg results">
+                <h4>A tailored experience. Blurb about how to measure, etc.</h4>
+                <img src="../static/img/measurement_guide.jpg">
+          </div>
+        </div> <!-- end of search results -->
+       </div>
+<!-- 			<form role="form">
 			  <div class="form-group">
 			    <label for="bust">Bust</label>
 			    <input type="bust" class="form-control" id="bust" placeholder="Enter bust">
@@ -23,16 +64,10 @@
 			    <input type="hip" class="form-control" id="hip" placeholder="Enter hip">
 			  </div>
 			  <button type="submit" class="btn btn-default">Submit</button>
-			</form>
+			</form> -->
 
-		</div>
-		<div class= "col-md-8 well well-lg" id = "measurement_guide">
-			<h4>A tailored experience. Blurb about how to measure, etc.</h4>
-			<img src="../static/img/measurement_guide.jpg">
-		</div>
+		<!-- </div> -->
 			
-
-	</div> <!-- end of search results -->
 
 
 {% endblock %}
