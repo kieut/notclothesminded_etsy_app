@@ -5,19 +5,19 @@
 		<div class = "col-sm-3 search_panel">
 			<h4>Your measurements!</h4>
 
-			<form role="form">
+			<form role="form" action="/search_results" method="POST">
 
 			  <div class="form-group">
 			    <label for="description">Description</label>
-			    <input type="bust" class="form-control" id="bust" placeholder="Search for dresses.">
+			    <input type="text" name="description" class="form-control" id="description" placeholder="Search for dresses.">
 			  </div>
 
 <!-- 			  <form role= "form form-inline"> -->
 			  <div class="form-group">
 			    	<label for="bust">Bust</label>
 			    	<!-- <div> -->
-				    	<input type="bust" class="form-control col-sm-1 range-input" id="min-bust" placeholder="min-bust">
-				    	<input type="bust" class="form-control col-sm-1 range-input" id="max-bust" placeholder="max-bust">
+				    	<input type="text" name="min-bust" class="form-control col-sm-1 range-input" id="min-bust" placeholder="min-bust">
+				    	<input type="text" name="max-bust" class="form-control col-sm-1 range-input" id="max-bust" placeholder="max-bust">
 					<!-- </div> -->
 				</div>
               <!-- </form> -->
@@ -26,21 +26,21 @@
               <div class="form-group">
                     <label for="waist">Waist</label>
                     <!-- <div> -->
-                        <input type="min-waist" class="form-control col-sm-1 range-input" id="min-waist" placeholder="min-waist">
-                        <input type="max-waist" class="form-control col-sm-1 range-input" id="max-waist" placeholder="max-waist">
+                        <input type="text" name="min-waist" class="form-control col-sm-1 range-input" id="min-waist" placeholder="min-waist">
+                        <input type="text" name="max-waist" class="form-control col-sm-1 range-input" id="max-waist" placeholder="max-waist">
                     <!-- </div> -->
                 </div>
               <!-- </form> -->
 
               <!-- <form role= "form form-inline"> -->
               <div class="form-group">
-                    <label for="waist">Hips</label>
+                    <label for="hip">Hips</label>
                     <!-- <div> -->
-                        <input type="min-hip" class="form-control col-sm-1 range-input" id="min-hip" placeholder="min-hip">
-                        <input type="max-waist" class="form-control col-sm-1 range-input" id="max-hip" placeholder="max-hip">
+                        <input type="text" name="min-hip" class="form-control col-sm-1 range-input" id="min-hip" placeholder="min-hip">
+                        <input type="text" name="max-hip" class="form-control col-sm-1 range-input" id="max-hip" placeholder="max-hip">
                     <!-- </div> -->
                 </div>
-                <button type="submit" class="btn btn-default submit-btn">Submit</button>
+                <button type="submit" class="btn btn-default submit-btn" id="search-results">Submit</button>
               </form>
           </div>
 
@@ -71,6 +71,19 @@
 
 
 {% endblock %}
+
+
+<script type="text/javascript">
+
+
+
+function main() {
+
+	var submitButton = $('search-results');
+	submitButton.click(get_results)
+
+}
+</script>
 
 <!-- Need to use AJAX to dynamically load the page. Something about a throwaway template. The event handler will be when Submit is clicked, that will make a call to get the results in the html format??
 $('#measurement_guide')

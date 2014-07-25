@@ -65,3 +65,37 @@ body {
 .range-input {
 	margin-bottom: 10px;
 }
+
+.box {
+/*	width:300;
+	height:400px;*/
+	background:#FFF;
+	margin:40px auto;
+}
+
+.effect{
+	-webkit-box-shadow: 0 10px 6px -6px #777;
+	   -moz-box-shadow: 0 10px 6px -6px #777;
+	        box-shadow: 0 10px 6px -6px #777;
+}
+
+.dress-img {
+	width: 200px;
+	height: 300px;
+	margin-top: 5px;
+	text-align: center;
+	position:relative;
+}
+
+.listing-img {
+	width: 400px;
+	margin-top: 5px;
+	text-align: center;
+
+}
+
+.listing-info {
+	background-color:white;
+	border-radius: 7px;
+	margin-left: 15px
+}
