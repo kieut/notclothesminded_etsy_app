@@ -1,31 +1,22 @@
-	<div class = "row" id = "search">
-		<div class = "col-md-3" id = "search_panel">
+{% for listing in listings %}
+
+<div class = "container">	
+	<div class = "row" id = "search-content">
 		<div class= "col-md-8 well well-lg" id = "search_results">
 			<div class="row">
 			  <div class="col-md-4 box effect">
-			  		<a href="/"><img src ="../static/img/dress.jpg" class="dress-img"></a>
+			  		<a href="/"><img src ="../static/dress.jpg" class="dress-img"></a>
 			  		<div class = "listing_details">
 			  			<div class="listing_title"> 
-			  				<a href="">Listing Title</a>
+			  				<a href="">Title</a>
 			  				<p>price</p>
 			  			</div>
 			  		</div>
 			  </div>
-			  <div class="col-md-4 box effect">
-			  		<a href="/"><img src ="../static/img/dress.jpg" class="dress-img"></a>
-			  		<div class = "listing_details">
-			  			<div class="listing_title"> 
-			  				<a href="">Listing Title</a>
-			  				<p>price</p>
-			  			</div>
-			  		</div>
-			  </div>
-			  <div class="col-md-4 box effect">
-			  		<a href="/"><img src ="../static/img/dress.jpg" class="dress-img"></a>
-			  		<div class = "listing_details">
-			  			<div class="listing_title"> 
-			  				<a href="">Listing Title</a>
-			  				<p>price</p>
-			  			</div>
-			  		</div>
-			  </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endfor %}
+

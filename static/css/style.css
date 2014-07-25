@@ -20,7 +20,7 @@ body {
 	margin-left: 15px;
 }
 
-.results {
+#results {
 	background-color:white;
 	border-radius: 7px;
 	margin-left: 15px

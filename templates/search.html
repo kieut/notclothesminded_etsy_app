@@ -5,7 +5,7 @@
 		<div class = "col-sm-3 search_panel">
 			<h4>Your measurements!</h4>
 
-			<form role="form" action="/search_results" method="POST">
+			<form role="form" action="/search_results" method="POST" id="measurements">
 
 			  <div class="form-group">
 			    <label for="description">Description</label>
@@ -44,55 +44,55 @@
               </form>
           </div>
 
-          <div class= "col-sm-8 well well-lg results">
+<!-- the result of the search will be rendered inside this div -->
+          <div class= "col-sm-8 well well-lg" id = "results">
                 <h4>A tailored experience. Blurb about how to measure, etc.</h4>
                 <img src="../static/img/measurement_guide.jpg">
           </div>
         </div> <!-- end of search results -->
        </div>
-<!-- 			<form role="form">
-			  <div class="form-group">
-			    <label for="bust">Bust</label>
-			    <input type="bust" class="form-control" id="bust" placeholder="Enter bust">
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputPassword1">Waist</label>
-			    <input type="waist" class="form-control" id="waist" placeholder="Enter waist">
-			  </div>
-			  <div class="form-group">
-			    <label for="Hip">Hip</label>
-			    <input type="hip" class="form-control" id="hip" placeholder="Enter hip">
-			  </div>
-			  <button type="submit" class="btn btn-default">Submit</button>
-			</form> -->
-
-		<!-- </div> -->
 			
-
-
-{% endblock %}
-
-
 <script type="text/javascript">
+// when the document is ready, log it. When the measurements id form is submitted, prevent the default
+// behavior, jquery ajax object is passed an object(key value pairs), when it is done getting info from that route, log it.
 
+
+$(document).ready(function(){
+	console.log("Document ready.");
+
+	// process the form
+	$('#measurements').submit(function(event){
+
+		// get the form data
+		// formData = $(this).serializeArray());
+
+		// stop the form from submitting the normal way and refreshing the page
+		event.preventDefault();
+		console.log("form submitted");
+
+		// process the form
+		$.ajax({
+			"url": "/search_results",
+			"type": "POST",
+			data: $('#measurements').serialize()
+		})
+			// using the done promise callback, data is the response
+			.done(function(data){
+				 // Put the results in a div
+				// var content = $(data).find("search-content");
+				$("#results").empty().append(data);
+
+			// log the data to the console
+			console.log(data);
+		});
+
+	});
+});
 
 
 function main() {
 
-	var submitButton = $('search-results');
-	submitButton.click(get_results)
-
 }
 </script>
 
-<!-- Need to use AJAX to dynamically load the page. Something about a throwaway template. The event handler will be when Submit is clicked, that will make a call to get the results in the html format??
-$('#measurement_guide')
-[
-<div class=​"col-md-8 well well-lg" id=​"measurement_guide">​…​</div>​
-]
-$('#measurement_guide').html("Results go here")
-[
-<div class=​"col-md-8 well well-lg" id=​"measurement_guide">​Results go here​</div>​
-]
-
-  -->
+{% endblock %}

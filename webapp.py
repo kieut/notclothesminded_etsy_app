@@ -69,10 +69,48 @@ def search():
     #make queries here. 
     return render_template("search.html")
 
-@app.route("/search_results")
+@app.route("/search_results", methods=["POST"])
 def get_results():
-    #make queries here. 
-	return render_template("search_results.html")
+    # need to break up description and query for each one against title
+    description = request.form['description']
+    title = description.split(' ')
+    min_bust = request.form['min-bust']
+    max_bust = request.form['max-bust']
+    min_waist = request.form['min-waist']
+    max_waist = request.form['max-waist']
+    min_hip = request.form['min-hip']
+    max_hip = request.form['max-hip']
+
+    """Need to check for exceptions, empty input fields """
+
+    query = model.db_session.query(model.Listing).filter(model.Listing.min_bust <= max_bust).filter(model.Listing.max_bust >= min_bust)
+    query = query.filter(model.Listing.min_waist <= max_waist).filter(model.Listing.max_waist >= min_waist)
+    query = query.filter(model.Listing.min_hip <= max_hip).filter(model.Listing.max_hip >= min_hip)
+
+    for word in title:
+        print word
+        query = query.filter(model.Listing.title.like('%' + word + '%'))
+    # print query
+
+    results = query.all()
+    # returns listing objects, can call diff columns on it.
+    # print results
+
+    # for listing in results:
+    #     print listing.title, listing.price, listing.listing_url
+
+    # return ""
+    return render_template("_search_results.html", listings = results )
+
+
+@app.route("/listing_details")
+def get_listing_detail():
+    return render_template("listing_details.html")
+
+@app.route("/test", methods = ["POST", "GET"])
+def test():
+    return "ajax return"
+    # return render_template("_search_results.html", listings =)
 
 
 
