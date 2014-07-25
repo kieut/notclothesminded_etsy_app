@@ -33,6 +33,7 @@ class Listing(Base):
     __tablename__= "listings"
 
     id = Column(Integer, primary_key=True)
+    listing_id = Column(Integer(64), nullable=False)
     title = Column(String(140), nullable=False)
     description = Column(Text, nullable=False)
     listing_url = Column(String(100), nullable=False)
@@ -49,7 +50,7 @@ class Listing(Base):
     state = Column(String(64), nullable=False)
     last_crawl = Column(Integer, nullable=False) # get epoch time from python, utc, save as int
     last_modified = Column(Integer, nullable=False) # already displayed in epoch time, just save as an int
-
+ 
 class UserFavorite(Base):
     __tablename__ = "favorites"
 
@@ -66,8 +67,8 @@ class ListingImage(Base):
     __tablename__= "images"
 
     id = Column(Integer, primary_key=True)
-    listing_image_id = Column(Integer(64), nullable=True)
-    listing_id = Column(Integer, ForeignKey("listings.id"), nullable=True)
+    listing_image_id = Column(Integer, ForeignKey("listings.id"),nullable=False)
+    # listing_id = Column(Integer, ForeignKey("listings.id"), nullable=True)
     url_170x135 = Column(String(200), nullable=True)
     url_570xN = Column(String(200), nullable=True)
     url_75x75 = Column(String(200), nullable=True)

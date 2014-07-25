@@ -20,6 +20,7 @@ def convert_listings(etsy_listing):
 	if bust is not None and waist is not None:
 
 	    return etsy_listing['listing_id'], model.Listing(
+	    	listing_id=etsy_listing['listing_id'],
 	    	title=etsy_listing['title'],
 	    	description=etsy_listing['description'],
 	    	listing_url=etsy_listing['url'],
@@ -39,7 +40,7 @@ def convert_images(image):
 	# print "*******image results list*****%s" % images_list
 		return model.ListingImage(
     	listing_image_id=image['listing_image_id'],
-    	listing_id=image['listing_id'],
+    	# listing_id=image['listing_id'],
         url_170x135=image['url_170x135'],
         url_570xN=image['url_570xN'],
         url_75x75=image['url_75x75'],
@@ -63,16 +64,17 @@ def main(db_session):
     print >>sys.stderr, 'Getting listings: ', time.time()
     get_listings(HandleListing)
 
-    if False:
-    	print >>sys.stderr, 'Getting images: ', time.time()
-    	for listing_id in listing_id_list:
-   		 	images = get_images(listing_id)
-   		 	images_list = images['results']
-   		 	for image in images_list:
-				db_session.add(convert_images(image))
+#Not getting images right now until figure out how to retrieve a batch
+    if True:
+        print >>sys.stderr, 'Getting images: ', time.time()
+        for listing_id in listing_id_list:
+   		    images = get_images(listing_id)
+   	 	    images_list = images['results']
+   		    for image in images_list:
+			    db_session.add(convert_images(image))
 
-	print >>sys.stderr, 'Comitting to DB: ', time.time()
-	db_session.commit()
+    print >>sys.stderr, 'Comitting to DB: ', time.time()
+    db_session.commit()
 
 if __name__ == "__main__":
     s = model.db_session()
