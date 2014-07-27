@@ -33,7 +33,7 @@ class Listing(Base):
     __tablename__= "listings"
 
     id = Column(Integer, primary_key=True)
-    listing_id = Column(Integer(64), nullable=False)
+    etsy_listing_id = Column(Integer(64), nullable=False)
     title = Column(String(140), nullable=False)
     description = Column(Text, nullable=False)
     listing_url = Column(String(100), nullable=False)
@@ -48,8 +48,8 @@ class Listing(Base):
     max_hip = Column(Float, nullable=False)
     creation_date = Column(Integer, nullable=False)
     state = Column(String(64), nullable=False)
-    last_crawl = Column(Integer, nullable=False) # get epoch time from python, utc, save as int
-    last_modified = Column(Integer, nullable=False) # already displayed in epoch time, just save as an int
+    last_crawl = Column(Integer, nullable=False)
+    last_modified = Column(Integer, nullable=False) 
  
 class UserFavorite(Base):
     __tablename__ = "favorites"
@@ -67,14 +67,14 @@ class ListingImage(Base):
     __tablename__= "images"
 
     id = Column(Integer, primary_key=True)
-    listing_image_id = Column(Integer, ForeignKey("listings.id"),nullable=False)
-    # listing_id = Column(Integer, ForeignKey("listings.id"), nullable=True)
-    url_170x135 = Column(String(200), nullable=True)
-    url_570xN = Column(String(200), nullable=True)
+#    etsy_image_id = Column(Integer, nullable=False)
+    etsy_listing_id = Column(Integer, ForeignKey("listings.etsy_listing_id"), nullable=True)
+    # url_170x135 = Column(String(200), nullable=True)
+    # url_570xN = Column(String(200), nullable=True)
     url_75x75 = Column(String(200), nullable=True)
     url_fullxfull = Column(String(200), nullable=True)
 
-    listing = relationship("Listing", backref=backref("listings", order_by=id))
+    listing = relationship("Listing", backref=backref("images", order_by=id))
 
 # def connect():
 #     global ENGINE

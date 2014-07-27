@@ -93,14 +93,8 @@ def get_results():
     # print query
 
     results = query.all()
-    # returns listing objects, can call diff columns on it.
-    # print results
-
-    # for listing in results:
-    #     print listing.title, listing.price, listing.listing_url
-
     # return ""
-    return render_template("_search_results.html", listings = results )
+    return render_template("_search_results.html", listings = results)
 
 
 @app.route("/listing_details")

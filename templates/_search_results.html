@@ -1,3 +1,4 @@
+
 {% for listing in listings %}
 
 <div class = "container">	
@@ -5,11 +6,15 @@
 		<div class= "col-md-8 well well-lg" id = "search_results">
 			<div class="row">
 			  <div class="col-md-4 box effect">
-			  		<a href="/"><img src ="../static/dress.jpg" class="dress-img"></a>
+			  	<!-- can call the backref relationship to images, and get the imgs from there. -->
+			  	<!-- listing.images is from the variable I created for the relationship -->
+			  	{% for image in listing.images %}
+			  		<a href="/"><img src = "{{ image.url_fullxfull }}" class="dress-img"></a>
+			  	{% endfor %}
 			  		<div class = "listing_details">
 			  			<div class="listing_title"> 
-			  				<a href="">Title</a>
-			  				<p>price</p>
+			  				<a href="{{ listing.listing_url }}">{{ listing.title }}</a>
+			  				<p>{{ listing.price }}</p>
 			  			</div>
 			  		</div>
 			  </div>
