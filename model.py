@@ -27,7 +27,6 @@ class User(Base):
     age = Column(Integer, nullable=False)
     zipcode = Column(String(15), nullable=False)
 
-"""Need to refactor and track listing_ids instead for image API calls"""
 
 class Listing(Base):
     __tablename__= "listings"
@@ -48,8 +47,9 @@ class Listing(Base):
     max_hip = Column(Float, nullable=False)
     creation_date = Column(Integer, nullable=False)
     state = Column(String(64), nullable=False)
-    last_crawl = Column(Integer, nullable=False)
+    # last_crawl = Column(Integer, nullable=False)
     last_modified = Column(Integer, nullable=False) 
+    ending_tsz = Column(Integer, nullable=False)
  
 class UserFavorite(Base):
     __tablename__ = "favorites"
@@ -75,6 +75,21 @@ class ListingImage(Base):
     url_fullxfull = Column(String(200), nullable=True)
 
     listing = relationship("Listing", backref=backref("images", order_by=id))
+
+class CrawlHistory(Base):
+    __tablename__="crawlhistory"
+
+    id = Column(Integer, primary_key=True)
+    timestamp = Column(Integer, ForeignKey("listings.id"), nullable=False)
+    total_results = Column(Integer, nullable=False)
+    matched_results = Column(Integer, nullable=False)
+    prev_timestamp = Column(Integer, nullable=False)
+    total_time = Column(Integer, nullable=False)
+    num_queries_made = Column(Integer, nullable=False)
+    min_price = Column(Integer, nullable=False)
+    max_price = Column(Integer, nullable=False)
+
+    listing = relationship("Listing", backref=backref("crawlhistory", order_by=id))
 
 # def connect():
 #     global ENGINE

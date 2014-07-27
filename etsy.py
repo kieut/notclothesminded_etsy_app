@@ -4,9 +4,8 @@ import urllib
 
 mykey = 'vgmfi5108akc4ot4rthtrw08'
 
-def get_listings(ListingHandler):
-    """This only gets me the count for each 'price bucket', only gives me 100 items per query.
-    Still need to query for items for 100-150, 150-200, and >200, and tab through paginations"""
+def get_listings(ListingHandler, min_price, max_price):
+
     def get_page(offset, price):
         parameters = urllib.urlencode({'api_key': mykey, 'limit': 100, 
         'offset': offset, 'category': 'Vintage/Clothing/Dress',
@@ -21,12 +20,18 @@ def get_listings(ListingHandler):
             ListingHandler(etsy_listing)
         return result['count']
 
-    for price in range(85, 90):
+    num_queries_made = 0
+    for price in range(min_price, max_price):
         #only returning the count
         count = get_page(0, price)
+        num_queries_made += 1
         print "*******Price: %s, Count: %s" % (price, count)
         for offset in range(100, count, 100):
+            num_queries_made += 1
             get_page(offset, price)
+    return num_queries_made
+
+
     
 # def get_images(listing_id):
 #     parameters = urllib.urlencode({'api_key': 'vgmfi5108akc4ot4rthtrw08',
