@@ -4,13 +4,14 @@ from sqlalchemy import Column, Integer, String, Text, Float
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, backref
+import os
 
-engine = create_engine("sqlite:///notclothesminded.db", echo=False)
+engine = create_engine(os.environ.get("DATABASE_URL", "sqlite:///notclothesminded.db"), echo=False)
 db_session = scoped_session(sessionmaker(bind=engine,
                                       autocommit = False,
                                       autoflush = False))
-ENGINE = None
-Session = None
+# ENGINE = None
+# Session = None
 
 Base = declarative_base()
 Base.query = db_session.query_property()
@@ -32,12 +33,12 @@ class Listing(Base):
     __tablename__= "listings"
 
     id = Column(Integer, primary_key=True)
-    etsy_listing_id = Column(Integer(64), nullable=False)
-    title = Column(String(140), nullable=False)
+    etsy_listing_id = Column(Integer(64), unique=True, nullable=False)
+    title = Column(String(200), nullable=False)
     description = Column(Text, nullable=False)
-    listing_url = Column(String(100), nullable=False)
+    listing_url = Column(String(200), nullable=False)
     price = Column(Float, nullable=False)
-    materials = Column(String(100), nullable=False)
+    materials = Column(String(150), nullable=False)
     currency = Column(String(64), nullable=False)
     min_bust = Column(Float, nullable=False)
     max_bust = Column(Float, nullable=False)
@@ -50,6 +51,7 @@ class Listing(Base):
     # last_crawl = Column(Integer, nullable=False)
     last_modified = Column(Integer, nullable=False) 
     ending_tsz = Column(Integer, nullable=False)
+    timestamp = Column(Integer, nullable=False)
  
 class UserFavorite(Base):
     __tablename__ = "favorites"
@@ -80,7 +82,7 @@ class CrawlHistory(Base):
     __tablename__="crawlhistory"
 
     id = Column(Integer, primary_key=True)
-    timestamp = Column(Integer, ForeignKey("listings.id"), nullable=False)
+    timestamp = Column(Integer, nullable=False)
     total_results = Column(Integer, nullable=False)
     matched_results = Column(Integer, nullable=False)
     prev_timestamp = Column(Integer, nullable=False)
@@ -88,8 +90,6 @@ class CrawlHistory(Base):
     num_queries_made = Column(Integer, nullable=False)
     min_price = Column(Integer, nullable=False)
     max_price = Column(Integer, nullable=False)
-
-    listing = relationship("Listing", backref=backref("crawlhistory", order_by=id))
 
 # def connect():
 #     global ENGINE
@@ -99,6 +99,9 @@ class CrawlHistory(Base):
 #     Session = sessionmaker(bind=ENGINE)
 
 #     return Session()
+
+def create_tables():
+    Base.metadata.create_all(engine)
 
 def main():
     """In case we need this for something"""
