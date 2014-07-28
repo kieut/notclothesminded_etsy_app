@@ -1,15 +1,15 @@
 import HTMLParser
 import model
-from etsy import get_listings, get_images
+from etsy import get_listings
 from parser import ListingParser
 import time
 import sys
 import traceback
 
-MIN_PRICE = 95
-MAX_PRICE = 100
+MIN_PRICE = 90
+MAX_PRICE = 91
 
-def convert_listing(etsy_listing):
+def convert_listing(etsy_listing, start_time):
     description = etsy_listing['description']
     item = HTMLParser.HTMLParser().unescape(description)
     print "\n*****listing description:"
@@ -37,7 +37,8 @@ def convert_listing(etsy_listing):
             creation_date=etsy_listing['creation_tsz'],
             state=etsy_listing['state'],
             last_modified=etsy_listing['last_modified_tsz'],
-            ending_tsz=etsy_listing['ending_tsz'])
+            ending_tsz=etsy_listing['ending_tsz'],
+            timestamp=start_time)
 
         images = []
         for image in etsy_listing['Images']:
@@ -71,10 +72,10 @@ def main(db_session):
     else: 
         prev_timestamp = result.timestamp
 
-    def HandleListing(etsy_listing):
+    def HandleListing(etsy_listing, start_time):
         total_results[0] += 1
         try:
-            result = convert_listing(etsy_listing)
+            result = convert_listing(etsy_listing, start_time)
         except Exception:
             print >>sys.stderr, 'Invalid listing: ', etsy_listing
             traceback.print_exc()
@@ -96,7 +97,8 @@ def main(db_session):
     print >>sys.stderr, 'Getting listings: ', time.time()
 
     start_time = time.time()
-    num_queries_made = get_listings(HandleListing, MIN_PRICE, MAX_PRICE)
+
+    num_queries_made = get_listings(HandleListing, MIN_PRICE, MAX_PRICE, start_time)
     total_time = time.time() - start_time
 
     crawlhistory = model.CrawlHistory(

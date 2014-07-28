@@ -4,7 +4,7 @@ import urllib
 
 mykey = 'vgmfi5108akc4ot4rthtrw08'
 
-def get_listings(ListingHandler, min_price, max_price):
+def get_listings(ListingHandler, min_price, max_price, start_time):
 
     def get_page(offset, price):
         parameters = urllib.urlencode({'api_key': mykey, 'limit': 100, 
@@ -17,7 +17,7 @@ def get_listings(ListingHandler, min_price, max_price):
         result = json.loads(content)
         for etsy_listing in result['results']:
             #initially, ListingHandler is passed through w/o parameters, so must provide one here: etsy_listing
-            ListingHandler(etsy_listing)
+            ListingHandler(etsy_listing, start_time)
         return result['count']
 
     num_queries_made = 0
