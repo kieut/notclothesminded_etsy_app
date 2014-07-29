@@ -6,8 +6,8 @@ import time
 import sys
 import traceback
 
-MIN_PRICE = 90
-MAX_PRICE = 91
+MIN_PRICE = 95
+MAX_PRICE = 96
 
 def convert_listing(etsy_listing, start_time):
     description = etsy_listing['description']
@@ -20,15 +20,14 @@ def convert_listing(etsy_listing, start_time):
     hip = parser.GetHip()
     print "*******end of description*******"
 
-    if bust is not None and waist is not None:
-
+    if etsy_listing['currency_code'] == 'USD' and bust is not None and waist is not None:
         listing = model.Listing(
             etsy_listing_id=etsy_listing['listing_id'],
             title=etsy_listing['title'],
             description=etsy_listing['description'],
             listing_url=etsy_listing['url'],
             price=float(etsy_listing['price']),
-            materials=",".join(etsy_listing['materials']),
+            # materials=",".join(etsy_listing['materials']),
             currency=etsy_listing['currency_code'],
             min_bust=bust[0], max_bust=bust[1],
             min_waist=waist[0], max_waist=waist[0],
@@ -72,8 +71,12 @@ def main(db_session):
     else: 
         prev_timestamp = result.timestamp
 
+    seen_ids = set()
     def HandleListing(etsy_listing, start_time):
         total_results[0] += 1
+#        if total_results[0] % 1000 == 0:
+#            print >>sys.stderr, '***%s total listings processed' % total_results
+
         try:
             result = convert_listing(etsy_listing, start_time)
         except Exception:
@@ -84,7 +87,12 @@ def main(db_session):
         if result is not None:
             matched_results[0] += 1
             listing_id, listing, images = result
-            db_session.add(listing)
+            if listing_id in seen_ids:
+                print >>sys.stderr, 'Warning, duplicate listing id:', listing_id
+            seen_ids.add(listing_id)
+            db_session.merge(listing)
+
+
             for image in images:
                 db_session.add(image)
 
@@ -118,5 +126,9 @@ def main(db_session):
     db_session.commit()
 
 if __name__ == "__main__":
+    if len(sys.argv) > 2:
+        MIN_PRICE = int(sys.argv[1])
+        MAX_PRICE = int(sys.argv[2])
+        
     s = model.db_session()
     main(s)

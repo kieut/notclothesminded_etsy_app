@@ -32,13 +32,12 @@ class User(Base):
 class Listing(Base):
     __tablename__= "listings"
 
-    id = Column(Integer, primary_key=True)
-    etsy_listing_id = Column(Integer(64), unique=True, nullable=False)
+    etsy_listing_id = Column(Integer(64), primary_key=True, nullable=False)
     title = Column(String(200), nullable=False)
     description = Column(Text, nullable=False)
     listing_url = Column(String(200), nullable=False)
     price = Column(Float, nullable=False)
-    materials = Column(String(150), nullable=False)
+    # materials = Column(String(150), nullable=False)
     currency = Column(String(64), nullable=False)
     min_bust = Column(Float, nullable=False)
     max_bust = Column(Float, nullable=False)
@@ -59,7 +58,7 @@ class UserFavorite(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     #ForeignKey says it references another column in another table
-    listing_id = Column(Integer, ForeignKey("listings.id"), nullable=False)
+    listing_id = Column(Integer, ForeignKey("listings.etsy_listing_id"), nullable=False)
 
     user = relationship("User", backref=backref("favorites", order_by=id))
     listing = relationship("Listing", backref=backref("favorites", order_by=id))

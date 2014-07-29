@@ -10,14 +10,15 @@ def get_listings(ListingHandler, min_price, max_price, start_time):
         parameters = urllib.urlencode({'api_key': mykey, 'limit': 100, 
         'offset': offset, 'category': 'Vintage/Clothing/Dress',
         'includes': 'Images(url_fullxfull,url_75x75)', 
-        'min_price': price, 'max_price': price+1})
+        'min_price': price, 'max_price': price+.99})
         url = '?'.join(['https://openapi.etsy.com/v2/listings/active', parameters])
         resp, content = httplib2.Http().request(url)
         # print p, json.loads(content)['count']
         result = json.loads(content)
         for etsy_listing in result['results']:
             #initially, ListingHandler is passed through w/o parameters, so must provide one here: etsy_listing
-            ListingHandler(etsy_listing, start_time)
+            if etsy_listing['state'] == 'active':
+                ListingHandler(etsy_listing, start_time)
         return result['count']
 
     num_queries_made = 0
