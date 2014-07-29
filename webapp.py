@@ -16,11 +16,14 @@ def show_signup():
 
 @app.route("/signup", methods=["POST"])
 def process_sign_up():
+    first_name = request.form['first_name']
+    surname = request.form['surname']
     email = request.form["email"]
     password = request.form["password"]
+
     # print "_____________%r" % d
     # 1) create a User object with form data
-    new_user = model.User(email=email, password=password)
+    new_user = model.User(first_name=first_name, surname=surname, email=email, password=password)
     # 2) add object to db
     model.db_session.add(new_user)
     model.db_session.commit()
@@ -100,12 +103,6 @@ def get_results():
 @app.route("/listing_details")
 def get_listing_detail():
     return render_template("listing_details.html")
-
-@app.route("/test", methods = ["POST", "GET"])
-def test():
-    return "ajax return"
-    # return render_template("_search_results.html", listings =)
-
 
 
 if __name__ == '__main__':

@@ -8,9 +8,8 @@
 			  <div class="col-md-4 box effect">
 			  	<!-- can call the backref relationship to images, and get the imgs from there. -->
 			  	<!-- listing.images is from the variable I created for the relationship -->
-			  	{% for image in listing.images %}
-			  		<a href="/"><img src = "{{ image.url_fullxfull }}" class="dress-img"></a>
-			  	{% endfor %}
+
+			  		<a href="{{ listing.listing_url }}"><img src = "{{ listing.images[0].url_fullxfull }}" class="dress-img"></a>
 			  		<div class = "listing_details">
 			  			<div class="listing_title"> 
 			  				<a href="{{ listing.listing_url }}">{{ listing.title }}</a>
