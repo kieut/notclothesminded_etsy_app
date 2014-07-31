@@ -13,7 +13,15 @@ body {
   padding: 15px;
   margin: 0 auto;
 }
-
+.img_container
+{
+	overflow: hidden;
+	height:220px;
+}
+.img_container>img
+{
+	width:100%;
+}
 .search_panel {
 	background-color: white;
 	border-radius: 7px;
@@ -23,7 +31,7 @@ body {
 #results {
 	background-color:white;
 	border-radius: 7px;
-	margin-left: 15px
+	margin-left: 15px;
 }
 
 .form-signin .form-signin-heading,
@@ -69,28 +77,32 @@ body {
 .box {
 /*	width:300;
 	height:400px;*/
-	background:#FFF;
-	margin:40px auto;
+	background-color:#FFF;
+	margin-left: 5px;
+	margin:10px auto;
+	padding: 3px;
+	height: 320px;
 }
 
 .effect{
-	-webkit-box-shadow: 0 10px 6px -6px #777;
-	   -moz-box-shadow: 0 10px 6px -6px #777;
-	        box-shadow: 0 10px 6px -6px #777;
+	-webkit-box-shadow: 0 10px 6px -3px #777;
+	   -moz-box-shadow: 0 10px 6px -3px #777;
+	        box-shadow: 0 10px 6px -3px #777;
 }
 
 .dress-img {
 	width: 200px;
-	height: 300px;
-	margin-top: 5px;
-	text-align: center;
-	position:relative;
+	/*height: 300px;*/
+	/*margin-top: 5px;*/
+	/*position:relative;*/
 }
 
 .listing-img {
-	width: 400px;
+	/*width: 400px;*/
 	margin-top: 5px;
 	text-align: center;
+	width: 214px;
+	height: 170px;
 
 }
 
@@ -98,4 +110,16 @@ body {
 	background-color:white;
 	border-radius: 7px;
 	margin-left: 15px
+}
+
+/*.listing-title {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding: 2px 6px;
+}*/
+
+.col-3 {
+	width: 224px;
+	height: 220px;
 }

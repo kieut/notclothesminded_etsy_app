@@ -1,6 +1,9 @@
 from flask import Flask, request, session, render_template, redirect, flash
 import model
 import jinja2
+from sqlalchemy.orm.exc import NoResultFound
+import json
+import md5
 
 app = Flask(__name__)
 app.secret_key = 'dress'
@@ -38,27 +41,29 @@ def show_login():
 def login():
     email = request.form["email"]
     password = request.form["password"]
-    #create a User object with form.data
+
     query = model.db_session.query(model.User)
-    user = query.filter_by(email=email)
 
-    if user == None:
-        flash("You are not in the database. Please sign up.")
-    elif user.password != password:
-        flash("Password incorrect. Unable to log in.")
+    try:    # if username exists
+        user = query.filter_by(email = email).one()
+
+        if user.password != password:
+            flash ("Password incorrect, unable to login.  Please try again.")
+            return render_template("login.html")
+        else:
+            session['user'] = user.first_name
+            session['email'] = user.email
+            return redirect("/search")
+
+    except NoResultFound:   # if username does not exist
+        flash ("%s is not a registered email.  Please try again." % email)
         return render_template("login.html")
-    else:
-        #add customer to cookie session, which is a dictionary
-        session["customer"] = [email, password]
-        flash("You've successfully logged in.")
 
-        #figure out redirect page, homepage? 
-        return redirect("/")
-
-    # user = model.db_session.query(model.User).filter_by(email=request.form['email']).filter_by(password=request.form['password']).one()
-    # print user
-
-    return render_template("login.html")
+@app.route("/logout")
+def logout():
+    session.clear()
+    flash("You've successfully logged out.")
+    return render_template("logout.html")
 
 
 @app.route("/user/<int:id>")
@@ -75,6 +80,8 @@ def search():
 @app.route("/search_results", methods=["POST"])
 def get_results():
     # need to break up description and query for each one against title
+
+
     description = request.form['description']
     title = description.split(' ')
     min_bust = request.form['min-bust']
@@ -84,20 +91,47 @@ def get_results():
     min_hip = request.form['min-hip']
     max_hip = request.form['max-hip']
 
-    """Need to check for exceptions, empty input fields """
+    result_key = md5.new(json.dumps([title, min_bust, max_bust, min_waist, max_waist, min_hip, max_hip])).digest().encode("hex")
 
-    query = model.db_session.query(model.Listing).filter(model.Listing.min_bust <= max_bust).filter(model.Listing.max_bust >= min_bust)
-    query = query.filter(model.Listing.min_waist <= max_waist).filter(model.Listing.max_waist >= min_waist)
-    query = query.filter(model.Listing.min_hip <= max_hip).filter(model.Listing.max_hip >= min_hip)
+    #session[result_key] = "lol"
 
-    for word in title:
-        print word
-        query = query.filter(model.Listing.title.like('%' + word + '%'))
-    # print query
+    #print session.viewkeys(),result_key
 
-    results = query.all()
-    # return ""
-    return render_template("_search_results.html", listings = results)
+    if 'results' in session.keys():
+        #print "RESUTS IN SESSION"
+        if result_key in session['results']:
+            #print "I'M GETTING DATA FROM THE CACHE"
+            results = session['results'][result_key]
+    else:
+        #print "I'M GETTING DATA FROM THE DATABASE"
+        """Need to check for exceptions, empty input fields """
+
+        query = model.db_session.query(model.Listing).filter(model.Listing.min_bust <= max_bust).filter(model.Listing.max_bust >= min_bust)
+        query = query.filter(model.Listing.min_waist <= max_waist).filter(model.Listing.max_waist >= min_waist)
+        query = query.filter(model.Listing.min_hip <= max_hip).filter(model.Listing.max_hip >= min_hip)
+
+        for word in title:
+            #print word
+            query = query.filter(model.Listing.title.ilike('%' + word + '%'))
+        # print query
+
+        results = query.all()
+
+        if 'results' not in session.keys():
+            session['results'] =  {}
+
+        session['results'][result_key] = results
+
+        #print session['results'][result_key]
+
+
+    count = len(results)
+    #print count
+
+    def format_price(amount):
+        return u'{0:.2f}'.format(amount)
+
+    return render_template("_search_results.html", listings = results, count = count, format_price = format_price)
 
 
 @app.route("/listing_details")

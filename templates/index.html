@@ -50,37 +50,7 @@
   $( function() {
     $('.listings').bgscroll({direction:'v' });
   });
-
-// Global Variables
-
-// var scrollSpeed = 50;
-// // set the default position
-// var current = 0;
-// // image height & rotation complete
-// var _ht,_finishNRot=false;
-// // set the direction
-// var direction = 'h';
-// // create hidden image element to grab height of it for calculation purpose
-// var url = $('.listings').css('background-image').replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
-// var bgImage = $('<img />');
-// bgImage.hide().bind('load', function(){ _ht = $(this).height(); });
-// $('body').append(bgImage);
-// bgImage.attr('src', url);
-
-// function bgscroll() {
-// // while rotation not completed 
-// if(_finishNRot==false){ current -= 1;} else {current+=1; } ;
-// // -ve Rotation completed
-// if(-(current)==_ht)_finishNRot = true;
-// // +ve Rotation completed
-// if((current)==0)_finishNRot = false;
-// // move the background with backgrond-position css properties
-// $('.listings').css("backgroundPosition", (direction == 'h') ? current + "px 0" : "0 " + current + "px");
-// }
-
-// Calls the scrolling function repeatedly
-// setInterval(bgscroll, scrollSpeed);
-//   </script>
+</script>
 
 </body>
 </html>

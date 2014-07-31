@@ -1,26 +1,121 @@
 
-{% for listing in listings %}
-
-<div class = "container">	
-	<div class = "row" id = "search-content">
-		<div class= "col-md-8 well well-lg" id = "search_results">
-			<div class="row">
-			  <div class="col-md-4 box effect">
-			  	<!-- can call the backref relationship to images, and get the imgs from there. -->
-			  	<!-- listing.images is from the variable I created for the relationship -->
-
-			  		<a href="{{ listing.listing_url }}"><img src = "{{ listing.images[0].url_fullxfull }}" class="dress-img"></a>
-			  		<div class = "listing_details">
-			  			<div class="listing_title"> 
-			  				<a href="{{ listing.listing_url }}">{{ listing.title }}</a>
-			  				<p>{{ listing.price }}</p>
-			  			</div>
-			  		</div>
-			  </div>
-			</div>
+<!-- <div class = "container">	 -->
+{% block body %}
+	<div class = "container">
+	<div class = "row search-header">
+	<div class = "results-count col-sm-6">
+		<h3> We found {{ count }} dresses that fit you! </h3>
+	</div>
+		<div class="col-sm-6 dropdown">
+		  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+		    Sort by
+		    <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" id="sort-highest">Highest Price</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" id="sort-lowest">Lowest Price</a></li>
+		  </ul>
 		</div>
+
 	</div>
 </div>
 
-{% endfor %}
+<script type="text/javascript">
+jQuery.fn.sortElements = (function(){
+ 
+    var sort = [].sort;
+ 
+    return function(comparator, getSortable) {
+ 
+        getSortable = getSortable || function(){return this;};
+ 
+        var placements = this.map(function(){
+ 
+            var sortElement = getSortable.call(this),
+                parentNode = sortElement.parentNode,
+ 
+                // Since the element itself will change position, we have
+                // to have some way of storing its original position in
+                // the DOM. The easiest way is to have a 'flag' node:
+                nextSibling = parentNode.insertBefore(
+                    document.createTextNode(''),
+                    sortElement.nextSibling
+                );
+ 
+            return function() {
+ 
+                if (parentNode === this) {
+                    throw new Error(
+                        "You can't sort elements if any one is a descendant of another."
+                    );
+                }
+ 
+                // Insert before flag:
+                parentNode.insertBefore(this, nextSibling);
+                // Remove flag:
+                parentNode.removeChild(nextSibling);
+ 
+            };
+ 
+        });
+ 
+        return sort.call(this, comparator).each(function(i){
+            placements[i].call(getSortable.call(this));
+        });
+ 
+    };
+ 
+})();
+$(document).ready(function()
+{
+	console.log("NEW PAGE");
+	$("#sort-highest").unbind().click(function(e)
+	{
+		e.preventDefault();
+		$('.box[data-price]').sortElements(function(a, b){
+			return parseFloat($(a).attr('data-price')) < parseFloat($(b).attr('data-price')) ? 1 : -1;
+		});
+	});
 
+	$("#sort-lowest").click(function(e)
+	{
+		e.preventDefault();
+		$('.box[data-price]').unbind().sortElements(function(a, b){
+			return parseFloat($(a).attr('data-price')) > parseFloat($(b).attr('data-price')) ? 1 : -1;
+		});
+	});
+});
+</script>
+
+	<div class = "row" id = "search-content">
+
+		<!-- <div class= "col-md-8 well well-lg" id = "search_results"> -->
+
+{% for listing in listings %}
+			<!-- <div class="row"> -->
+			<!-- <div class="container" -->
+			  <div class="col-md-4 box effect" data-price="{{ listing.price }}">
+			  	<!-- can call the backref relationship to images, and get the imgs from there. -->
+			  	<!-- listing.images is from the variable I created for the relationship -->
+
+			  		<a href="{{ listing.listing_url }}">
+			  			<div class="img_container">
+			  				<img src="{{ listing.images[0].url_fullxfull }}" class="img-responsive img-rounded dress-img">
+			  			</div>
+			  		</a>
+			  		<div class = "listing_details">
+			  			<div class="listing_title"> 
+			  				<a href="{{ listing.listing_url }}">{{ listing.title }}</a>
+			  				<p>${{ format_price(listing.price) }}</p>
+			  			</div>
+			  		</div>
+			  </div>
+
+			<!-- </div> -->
+<!-- </div> -->
+
+{% endfor %}
+		<!-- </div> -->
+	</div>
+
+{% endblock %}
