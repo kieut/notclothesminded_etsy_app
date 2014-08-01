@@ -3,41 +3,41 @@
 {% block body %}
 	<div class = "row">
 		<div class = "col-sm-3 search_panel">
-			<h4>Please input your measurements in inches.</h4>
+			<h3>Please input your measurements in inches.</h3>
 
 			<form role="form" action="/search_results" method="POST" id="measurements">
 
 			  <div class="form-group">
-			    <label for="description">Description</label>
-			    <input type="text" name="description" class="form-control" id="description" placeholder="Search for dresses.">
+			    <label for="description" class="search-titles" >Description</label>
+			    <input type="text" name="description" class="form-control" id="form-font" placeholder="Search for dresses.">
 			  </div>
 
 <!-- 			  <form role= "form form-inline"> -->
 			  <div class="form-group">
-			    	<label for="bust">Bust</label>
+			    	<label for="bust" class="search-titles">Bust</label>
 			    	<!-- <div> -->
-				    	<input type="text" name="min-bust" class="form-control col-sm-1 range-input" id="min-bust" placeholder="min-bust">
-				    	<input type="text" name="max-bust" class="form-control col-sm-1 range-input" id="max-bust" placeholder="max-bust">
+				    	<input type="text" name="min-bust" class="form-control col-sm-1 range-input" id="form-font" placeholder="min-bust">
+				    	<input type="text" name="max-bust" class="form-control col-sm-1 range-input" id="form-font" placeholder="max-bust">
 					<!-- </div> -->
 				</div>
               <!-- </form> -->
 
               <!-- <form role= "form form-inline"> -->
               <div class="form-group">
-                    <label for="waist">Waist</label>
+                    <label for="waist" class="search-titles" >Waist</label>
                     <!-- <div> -->
-                        <input type="text" name="min-waist" class="form-control col-sm-1 range-input" id="min-waist" placeholder="min-waist">
-                        <input type="text" name="max-waist" class="form-control col-sm-1 range-input" id="max-waist" placeholder="max-waist">
+                        <input type="text" name="min-waist" class="form-control col-sm-1 range-input" id="form-font" placeholder="min-waist">
+                        <input type="text" name="max-waist" class="form-control col-sm-1 range-input" id="form-font" placeholder="max-waist">
                     <!-- </div> -->
                 </div>
               <!-- </form> -->
 
               <!-- <form role= "form form-inline"> -->
               <div class="form-group">
-                    <label for="hip">Hips</label>
+                    <label for="hip" class="search-titles" >Hips</label>
                     <!-- <div> -->
-                        <input type="text" name="min-hip" class="form-control col-sm-1 range-input" id="min-hip" placeholder="min-hip">
-                        <input type="text" name="max-hip" class="form-control col-sm-1 range-input" id="max-hip" placeholder="max-hip">
+                        <input type="text" name="min-hip" class="form-control col-sm-1 range-input" id="form-font" placeholder="min-hip">
+                        <input type="text" name="max-hip" class="form-control col-sm-1 range-input" id="form-font" placeholder="max-hip">
                     <!-- </div> -->
                 </div>
                 <button type="submit" class="btn btn-default submit-btn" id="search-results">Submit</button>
@@ -45,9 +45,28 @@
           </div>
 
 <!-- the result of the search will be rendered inside this div -->
-          <div class= "col-sm-8 well well-lg" id = "results">
-                <h4>A tailored experience. Blurb about how to measure, etc.</h4>
-                <img src="../static/img/measurement_guide.jpg">
+          <div class= "container col-sm-8 well well-lg" id = "results">
+          		<!-- <div class="container>" -->
+          			<div class="row">
+                			<img src="../static/img/measurement_guide.jpg" class="col-sm-6">
+                		    <div class="col-sm-6">
+               				<span class="blurb">Notclothesminded strives to give you a tailored experience. Please measure and input your acceptable range of bust, waist, and hip measurements to quickly find items that fit you.
+               				<br>
+               				<br>
+               				Sellers: We account for many styles of listings, but if you would like to guarantee that your item is included in Notclothesminded, please follow this suggested format:
+               				<br>
+               				<br>
+               				<ul>
+               				<li>Bust: 32"</li>
+               				<li>Waist: 24"</li>
+               				<li>Hip: 34" or free </li>
+               			</ul>
+
+               				 </span>
+               				</div>
+               			</div>
+                	</div>
+                <!-- </div> -->
           </div>
         </div> <!-- end of search results -->
        </div>
@@ -87,7 +106,11 @@ $(document).ready(function(){
 		});
 
 	});
+
+
 });
+
+
 
 
 function main() {

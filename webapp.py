@@ -63,7 +63,7 @@ def login():
 def logout():
     session.clear()
     flash("You've successfully logged out.")
-    return render_template("logout.html")
+    return render_template("login.html")
 
 
 @app.route("/user/<int:id>")
@@ -91,42 +91,42 @@ def get_results():
     min_hip = request.form['min-hip']
     max_hip = request.form['max-hip']
 
-    result_key = md5.new(json.dumps([title, min_bust, max_bust, min_waist, max_waist, min_hip, max_hip])).digest().encode("hex")
+    # result_key = md5.new(json.dumps([title, min_bust, max_bust, min_waist, max_waist, min_hip, max_hip])).digest().encode("hex")
 
     #session[result_key] = "lol"
 
     #print session.viewkeys(),result_key
 
-    if 'results' in session.keys():
-        #print "RESUTS IN SESSION"
-        if result_key in session['results']:
-            #print "I'M GETTING DATA FROM THE CACHE"
-            results = session['results'][result_key]
-    else:
-        #print "I'M GETTING DATA FROM THE DATABASE"
-        """Need to check for exceptions, empty input fields """
+    # if 'results' in session.keys():
+    #     #print "RESULTS IN SESSION"
+    #     if result_key in session['results']:
+    #         #print "I'M GETTING DATA FROM THE CACHE"
+    #         results = session['results'][result_key]
+    # else:
+    #     #print "I'M GETTING DATA FROM THE DATABASE"
+    #     """Need to check for exceptions, empty input fields """
 
-        query = model.db_session.query(model.Listing).filter(model.Listing.min_bust <= max_bust).filter(model.Listing.max_bust >= min_bust)
-        query = query.filter(model.Listing.min_waist <= max_waist).filter(model.Listing.max_waist >= min_waist)
-        query = query.filter(model.Listing.min_hip <= max_hip).filter(model.Listing.max_hip >= min_hip)
+    query = model.db_session.query(model.Listing).filter(model.Listing.min_bust <= max_bust).filter(model.Listing.max_bust >= min_bust)
+    query = query.filter(model.Listing.min_waist <= max_waist).filter(model.Listing.max_waist >= min_waist)
+    query = query.filter(model.Listing.min_hip <= max_hip).filter(model.Listing.max_hip >= min_hip)
 
-        for word in title:
-            #print word
-            query = query.filter(model.Listing.title.ilike('%' + word + '%'))
-        # print query
+    for word in title:
+        #print word
+        query = query.filter(model.Listing.title.ilike('%' + word + '%'))
+    # print query
 
-        results = query.all()
+    results = query.all()
 
-        if 'results' not in session.keys():
-            session['results'] =  {}
+        # if 'results' not in session.keys():
+        #     session['results'] =  {}
 
-        session['results'][result_key] = results
+        # session['results'][result_key] = results
 
         #print session['results'][result_key]
 
 
     count = len(results)
-    #print count
+    print count
 
     def format_price(amount):
         return u'{0:.2f}'.format(amount)

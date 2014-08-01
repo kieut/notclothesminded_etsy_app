@@ -1,12 +1,39 @@
 body {
-	font-family: 'Helvetica';
+	font-family: 'Nothing You Could Do', Helvetica;
 	padding-top: 0;
 	background-image:url("../img/tree_bark.png");
+	font-size: 14px;
+}
+
+.navbar-fontsize{
+	font-size: 21px;
 }
 
 .logo {
 	height: 40px;
 	width: 40px;
+}
+
+#form-font {
+	font-size: 19px;
+}
+
+#search-results {
+	font-size: 19px;
+}
+
+.search-titles {
+	font-size: 18px;
+	color: green;
+}
+
+.blurb {
+	font-size: 17px;
+	font-family: monospace;
+}
+
+.listing-title {
+	font-family: Helvetica;
 }
 .form-signin {
   max-width: 330px;
@@ -18,6 +45,16 @@ body {
 	overflow: hidden;
 	height:220px;
 }
+
+.measurement-guide-ctn {
+	overflow: hidden;
+	/*height: 900px;*/
+}
+
+.measurement-guide-ctn>img {
+	width: 100%;
+}
+
 .img_container>img
 {
 	width:100%;
@@ -75,8 +112,6 @@ body {
 }
 
 .box {
-/*	width:300;
-	height:400px;*/
 	background-color:#FFF;
 	margin-left: 5px;
 	margin:10px auto;

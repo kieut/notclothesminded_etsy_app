@@ -11,6 +11,9 @@
 
     <title>notclothesminded</title>
 
+    <!-- google font -->
+  <link href='http://fonts.googleapis.com/css?family=Nothing+You+Could+Do' rel='stylesheet' type='text/css'>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
 
@@ -33,21 +36,21 @@
         <div class="navbar navbar-inverse navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-                    <img src="../static/img/hanger.png" class="logo"><a class="navbar-brand" href="/">Notclothesminded</a>
+                    <img src="../static/img/hanger.png" class="logo"><a class="navbar-brand navbar-fontsize" href="/">Notclothesminded</a>
                 </div>
                 <div class="navbar-collapse collapse">
                   <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                       {% if session.get("user") %}
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{session["user"] }}<span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
+                      <a href="#" class="dropdown-toggle navbar-fontsize" data-toggle="dropdown">{{session["user"] }}<span class="caret"></span></a>
+                      <ul class="dropdown-menu navbar-fontsize" role="menu">
                         <li><a href="#">Favorites</a></li>
                         <li class="divider"></li>
                         <li><a href="#">Profile</a></li>
                       </ul>
-                      <li><a href="/logout">Logout</a></li>
+                      <li><a class="navbar-fontsize" href="/logout">Logout</a></li>
                       {% else %}
-                            <li><a href="/login">Log In</a></li>
+                            <li><a class="navbar-fontsize" href="/login">Log In</a></li>
                         {% endif %}
                     </li>
                   </ul>
