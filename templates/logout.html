@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container">
+        {% if messages %}
+        <ul class="flashes">
+            <li>{{message}}</li>
+        </ul>
+        {% endif %}
+    </div>
+{% endblock %}

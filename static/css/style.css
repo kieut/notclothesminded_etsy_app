@@ -1,5 +1,5 @@
 body {
-	font-family: 'Nothing You Could Do', Helvetica;
+	font-family: monospace;
 	padding-top: 0;
 	background-image:url("../img/tree_bark.png");
 	font-size: 14px;
@@ -7,6 +7,7 @@ body {
 
 .navbar-fontsize{
 	font-size: 21px;
+	font-family: 'Nothing You Could Do', Helvetica
 }
 
 .logo {
@@ -18,23 +19,25 @@ body {
 	font-size: 19px;
 }
 
+.listing-details>a {
+	font-family: monospace;
+}
+
 #search-results {
 	font-size: 19px;
+
 }
 
 .search-titles {
 	font-size: 18px;
 	color: green;
+	font-family: 'Nothing You Could Do', Helvetica
 }
 
 .blurb {
 	font-size: 17px;
-	font-family: monospace;
 }
 
-.listing-title {
-	font-family: Helvetica;
-}
 .form-signin {
   max-width: 330px;
   padding: 15px;
@@ -43,7 +46,7 @@ body {
 .img_container
 {
 	overflow: hidden;
-	height:220px;
+	height:230px;
 }
 
 .measurement-guide-ctn {
@@ -63,6 +66,7 @@ body {
 	background-color: white;
 	border-radius: 7px;
 	margin-left: 15px;
+	font-family: 'Nothing You Could Do', Helvetica
 }
 
 #results {
@@ -116,7 +120,7 @@ body {
 	margin-left: 5px;
 	margin:10px auto;
 	padding: 3px;
-	height: 320px;
+	height: 355px;
 }
 
 .effect{
@@ -154,7 +158,10 @@ body {
 	padding: 2px 6px;
 }*/
 
-.col-3 {
-	width: 224px;
-	height: 220px;
+.results-count {
+	font-family: 'Nothing You Could Do', Helvetica
+}
+
+.form-signin {
+	font-family: 'Nothing You Could Do', Helvetica
 }

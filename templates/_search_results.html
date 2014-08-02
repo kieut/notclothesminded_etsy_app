@@ -98,16 +98,14 @@ $(document).ready(function()
 			  	<!-- can call the backref relationship to images, and get the imgs from there. -->
 			  	<!-- listing.images is from the variable I created for the relationship -->
 
-			  		<a href="{{ listing.listing_url }}">
+			  		<a target="_blank" href="{{ listing.listing_url }}">
 			  			<div class="img_container">
 			  				<img src="{{ listing.images[0].url_fullxfull }}" class="img-responsive img-rounded dress-img">
 			  			</div>
 			  		</a>
 			  		<div class = "listing_details">
-			  			<div class="listing_title"> 
-			  				<a href="{{ listing.listing_url }}">{{ listing.title }}</a>
+			  				<a target="_blank" href="{{ listing.listing_url }}">{{ listing.title }}</a>
 			  				<p>${{ format_price(listing.price) }}</p>
-			  			</div>
 			  		</div>
 			  </div>
 
