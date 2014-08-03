@@ -70,21 +70,22 @@ python -B crawler.py 50 100
 
 Tips for Contributing
 ------
-1. __Let's get more dresses!__ Currently, the application is only able to capture measurements from about 50% of the total number of active listings. This is due to the difficulty of accounting for all the possible variations of listings from different sellers. Some of the more obvious difficult to capture listings:
+__Let's get more dresses!__ There is no standard format for sellers to list measurements in their descriptions. Currently, the application is only able to capture measurements from about 50% of the total number of active listings. While it accounts for many variants, it is difficult to account for all the possible variations of listings from different sellers. Here are some examples:
 
-  1. Listings that do not list measurements, or are missing a necessary measurement (i.e. bust or waist). 
-  2. Listings that have two items, and thus two sets of measurements.
-    1. Best fits a modern xsmall - small. Please see measurements to ensure a great fit!
-       Dress- 
-       Bust: 35"
-       Waist: 25"
-       Length: 15" shoulder to waist, 29" waist to hem
-      
-       Bolero- 
-       Shoulder: approx 15"
-       Bust: 38"
-       Length: 13"
-       Sleeve length: 18"
-  3. Listings that also include the model's measurement, along with the item.
-  4. Typos!!
-  5. 
+1. Listings that do not list measurements, or are missing a necessary measurement (i.e. bust or waist). 
+2. Listings that have two items, and thus two sets of measurements.
+  1. Best fits a modern xsmall - small. Please see measurements to ensure a great fit!
+     Dress- 
+     Bust: 35"
+     Waist: 25"
+     Length: 15" shoulder to waist, 29" waist to hem
+    
+     Bolero- 
+     Shoulder: approx 15"
+     Bust: 38"
+     Length: 13"
+     Sleeve length: 18"
+3. Listings that also include the model's measurement, along with the item.
+4. Typos!!
+
+These unmatched listings may possibly be captured with NLP, or statistical probability. 
