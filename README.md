@@ -75,16 +75,16 @@ __Let's get more dresses!__ There is no standard format for sellers to list meas
 1. Listings that do not list measurements, or are missing a necessary measurement (i.e. bust or waist). 
 2. Listings that have two items, and thus two sets of measurements.
   1. Best fits a modern xsmall - small. Please see measurements to ensure a great fit!
-     Dress- 
-     Bust: 35"
-     Waist: 25"
-     Length: 15" shoulder to waist, 29" waist to hem
+     <br>Dress- 
+     <br>Bust: 35"
+     <br>Waist: 25"
+     <br>Length: 15" shoulder to waist, 29" waist to hem
     
      Bolero- 
-     Shoulder: approx 15"
-     Bust: 38"
-     Length: 13"
-     Sleeve length: 18"
+     <br>Shoulder: approx 15"
+     <br>Bust: 38"
+     <br>Length: 13"
+     <br>Sleeve length: 18"
 3. Listings that also include the model's measurement, along with the item.
 4. Typos!!
 
