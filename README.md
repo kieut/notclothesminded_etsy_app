@@ -13,15 +13,28 @@ Users waste less time, and are connected to more meaningful results.
 
 How it works
 ------------
-Presentation Layer:  HTML, CSS, JS, JQuery, AJAX, JSON and Bootstrap
-Application Layer: Python, Flask
-Data Layer: Postgres, SQLAlchemy
-APIs: Etsy
+Presentation Layer:  HTML, CSS, JS, JQuery, AJAX, JSON and Bootstrap<br/>
+Application Layer: Python, Flask<br/>
+Data Layer: Postgres, SQLAlchemy<br/>
+APIs: Etsy<br/>
 
-Notclothesminded's crawler makes HTTP requests to Etsy's API to retrieve active listings in Vintage/Clothing/Dresses, parses the listing descriptions for measurements using Regular Expressions, and commits them to a Postgres database. For database maintenance, every time the crawler is executed, it first deletes all expired listings before making batch requests to the Etsy API. It crawls every couple of hours to ensure an updated database of active etsy listings. 
+Notclothesminded's crawler makes HTTP requests to Etsy's API to retrieve active listings in Vintage/Clothing/Dresses, parses the listing descriptions for measurements using Regular Expressions, and commits them to a Postgres database. For database maintenance, every time the crawler is executed, it first deletes all expired listings before making batch requests to the Etsy API. It should crawl every couple of hours to ensure an updated database of active etsy listings.
 
-The following diagram maps out the backend code structure:
+###Crawler Components:
 
+1. __crawler.py__: Main entry point, primary logic file.
+2. __etsy.py__: Abstracts the Etsy API.
+2. __parser.py__: Utility class, used for parsing listing descriptions.
+3. __model.py__: Abstracts the local database model.
+
+__Project Organization Diagram__:
+
+###Database Tables:
+See model.py for full schema details, the purpose of each table is:
+
+1. __listings__: Stores matches listings and respective measurements.
+2. __images__: Stores image URLs for listings.
+2. __crawlhistory__: Stores crawl metadata for maintaining an audit trail.
 
 Set up
 ------------
@@ -59,8 +72,7 @@ create_tables()
 
 ### Populate the Database
 
-The controller file, crawler.py, takes argv parameters from the command line that represent the min and max range of your
-HTTP request to the Etsy API. Execute crawler.py file with price parameters in the command line to populate the database.
+The controller file, crawler.py, takes argv parameters from the command line that represent the min and max price range of your HTTP request to the Etsy API. Execute crawler.py file with price parameters in the command line to populate the database:
 
 
 ```
@@ -70,7 +82,7 @@ python -B crawler.py 50 100
 
 Tips for Contributing
 ------
-__Let's get more dresses!__ There is no standard format for sellers to list measurements in their descriptions. Currently, the application is only able to capture measurements from about 50% of the total number of active listings. While it accounts for many variants, it is difficult to account for all the possible variations of listings from different sellers. Here are some examples:
+__Let's get more dresses!__ There is currently no standard format for sellers to list measurements in their descriptions. As such, the application is only able to capture measurements from about 50% of the total number of active listings. While it accounts for many variants, it is difficult to account for all the possible variations of listings from different sellers. Here are some examples:
 
 1. Listings that do not list measurements, or are missing a necessary measurement (i.e. bust or waist). 
 2. Listings that have two items, and thus two sets of measurements.
