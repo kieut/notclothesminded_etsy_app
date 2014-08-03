@@ -7,7 +7,7 @@ Overview
 Notclothesminded is a web application that facilitates a more tailored purchasing experience for avid vintage clothing
 consumers who seek one-of-a-kind items on Etsy’s e-commerce marketplace.The application augments existing Etsy search
 capabilities with a measurement specific search facet by parsing freeform seller entered listing descriptions for each
-buyer’s unique measurements in over 300,000 active listings.  This enables buyers to locate items specific to their 
+buyer’s unique measurements in over 200,000 active listings.  This enables buyers to locate items specific to their 
 search criteria quickly and without the hassle of manually scanning numerous beautiful but ill-fitting matches. 
 Users waste less time, and are connected to more meaningful results. 
 
