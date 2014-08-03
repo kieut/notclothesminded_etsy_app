@@ -72,6 +72,6 @@ Tips for Contributing
 ------
 1. __Let's get more dresses!__ Currently, the application is only able to capture measurements from about 50% of the total number of active listings. This is due to the difficulty of accounting for all the possible variations of listings from different sellers. Difficult to capture listings:
 
-⋅⋅*1 Listings that do not list measurements, or are missing a necessary measurement. 
-⋅⋅*1 Listings that have two items, and thus two sets of measurements.
-⋅⋅*1 Listings that also include the model's measurement, along with the item. 
+⋅⋅*1. Listings that do not list measurements, or are missing a necessary measurement. 
+⋅⋅*1. Listings that have two items, and thus two sets of measurements.
+⋅⋅*1. Listings that also include the model's measurement, along with the item. 
