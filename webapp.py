@@ -88,22 +88,34 @@ def get_results():
         max_waist = int(request.form['max-waist'])
         min_hip = int(request.form['min-hip'])
         max_hip = int(request.form['max-hip'])
+        if 'limit' in request.form and 'offset' in request.form:
+            limit = int(request.form['limit'])
+            offset = int(request.form['offset'])
+        else:
+            limit = offset = None
 
-        query = model.db_session.query(model.Listing).filter(model.Listing.min_bust <= max_bust).filter(model.Listing.max_bust >= min_bust)
-        query = query.filter(model.Listing.min_waist <= max_waist).filter(model.Listing.max_waist >= min_waist)
-        query = query.filter(model.Listing.min_hip <= max_hip).filter(model.Listing.max_hip >= min_hip)
+        query = model.db_session.query(model.Listing).filter(
+            model.Listing.min_bust <= max_bust).filter(
+            model.Listing.max_bust >= min_bust).filter(
+            model.Listing.min_waist <= max_waist).filter(
+            model.Listing.max_waist >= min_waist).filter(
+            model.Listing.min_hip <= max_hip).filter(
+            model.Listing.max_hip >= min_hip)
 
         for word in title:
             #print word
             query = query.filter(model.Listing.title.ilike('%' + word + '%'))
         # print query
 
+        count = query.count()
+        if limit is not None and offset is not None:
+            query = query.limit(limit).offset(offset)
         results = query.all()
 
         for listing in results:
             listing.title = HTMLParser.HTMLParser().unescape(listing.title)
 
-        count = len(results)
+        # count = len(results)
 
         def format_price(amount):
             return u'{0:.2f}'.format(amount)
