@@ -15,7 +15,9 @@ How it works
 ------------
 On the backend, it uses Python, Flask as a MVC framework, SQLAlchemy as an ORM, and Postgres as the database. It
 makes calls to Etsy's API to retrieve active listings in Vintage/Clothing/Dresses, parses the listing descriptions for
-measurements using Regular Expressions, and commits them to a Postgres database.
+measurements using Regular Expressions, and commits them to a Postgres database. 
+
+For database maintenance, every time the crawler is executed, it first deletes all expired listings before making batch requests to the Etsy API. The crawler crawls every couple of hours to ensure an updated database of active etsy listings. 
 
 
 On the frontend, Notclothesminded uses Bootstrap, and JQuery to ensure an uninterrupted user experience by dynamically
@@ -44,7 +46,9 @@ You will need to get your own Etsy API_KEY. Once you obtain one, it needs to be 
 
 
 
-### Create Postgres Database
+### Create Database
+
+My application used a Postgres database, but if you'd like to use a different one, please feel free to configure engine.
 
 Install [Postgres](http://postgresapp.com/documentation/).
 
