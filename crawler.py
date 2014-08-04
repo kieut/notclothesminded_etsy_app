@@ -47,9 +47,12 @@ def convert_listing(etsy_listing, start_time):
 
     # If we weren't able to match the listing, print it out so we can see
     # descriptions that we failed to match.
-    print "\n***** unmatched listing description:"
+    print "\n\n\n***** Unmatched listing:"
     print item.encode('ascii', errors='ignore')
-    print "***** end of description"
+    print "*** Regex Matches ***"
+    for line in parser.output:
+        print line
+    print "***** End of listing"
 
 
 def delete_expired():

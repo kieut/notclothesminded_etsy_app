@@ -10,18 +10,6 @@ NUMBER_RE = re.compile('(?P<dec>[0-9]+\.?[0-9]*)(\s*(?P<num>[0-9]+)\/(?P<den>[0-
 
 RANGE_RE = re.compile('(?P<min>' + NUMBER_PAT + ')(\s*-\s*(?P<max>' + NUMBER_PAT + '))?')
 
-# BUST_PATTERNS_OLD = [
-#     re.compile('bust[- \t:~]+\D*(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")', re.IGNORECASE),
-#     re.compile('pit[- \t:~]+\D*(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")', re.IGNORECASE),
-#     re.compile('chest[- \t:~]+\D*(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")', re.IGNORECASE),
-#     re.compile('armpit[- \t:~]+\D*(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")', re.IGNORECASE),
-#     #when size is listed first
-#     re.compile('(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")\D*bust', re.IGNORECASE),
-#     re.compile('(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")\D*pit', re.IGNORECASE),
-#     re.compile('(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")\D*chest', re.IGNORECASE),
-#     re.compile('(?P<bust>([0-9\.\/\s-])+)[ \t]*(in|inches|")\D*armpit', re.IGNORECASE)
-# ]
-
 BUST_PATTERNS = [
     re.compile(
         '(bust|pit|chest)[- \t:~]+[^0-9\n]*'
@@ -30,12 +18,6 @@ BUST_PATTERNS = [
     re.compile('(?P<bust>' + RANGE_PAT + ')[ \t]*(in|inches|")'
         '[^0-9\n]*(bust|pit|chest|armpit)', re.IGNORECASE),
 ]
-
-# WAIST_PATTERNS_OLD = [
-#     re.compile('waist[- \t:~]+\D*(?P<waist>([0-9\.\/\s-])+)[ \t]*(in|inches|")', re.IGNORECASE),
-#     re.compile('(?P<waist>([0-9\.\/\s-])+)[ \t]*(in|inches|")\D*waist', re.IGNORECASE)
-
-# ]
 
 WAIST_PATTERNS = [
     re.compile(
@@ -46,14 +28,6 @@ WAIST_PATTERNS = [
         ')[ \t]*(in|inches|")[^0-9\n]*waist', re.IGNORECASE)
 
 ]
-
-# HIP_PATTERNS_OLD = [
-#     re.compile('hips?[- \t:~]+\D*(?P<hips>free|full|sweep|open)', re.IGNORECASE),
-#     re.compile('hips?[- \t:~]+\D*(?P<hips>([0-9\.\/\s-])+)[ \t]*(in|inches|")', re.IGNORECASE),
-#     # when size is listed first
-#     re.compile('(?P<hips>free|full|sweep|open)[ \t\D]*hips?', re.IGNORECASE),
-#     re.compile('(?P<hips>([0-9\.\/\s-])+)[ \t]*(in|inches|")\D*hips?', re.IGNORECASE)
-# ]
 
 OPEN_PAT = 'free|full|open|sweep'
 OPEN_RE = re.compile(OPEN_PAT, re.IGNORECASE)
@@ -107,44 +81,41 @@ def ParseRange(range_string):
 class ListingParser(object):
     def __init__(self, result):
         self.result = result
+        self.output = []
 
-    def GetBust(self): 
-        # print "\n*****listing description:"
-        # print result
-        # print "*******end of description*******"
-
+    def GetBust(self):
         for pattern in BUST_PATTERNS:
             matches = [m.group('bust') for m in pattern.finditer(self.result)]
         # empty collections evaluate to false
             if not matches:
                 continue
             if len(matches) > 1:
-                print "*****Multiple bust matches*****: ", matches
+                self.output.append(
+                    "  Single regex got multiple bust matches: %s" % matches)
                 continue
             min_val, max_val = ParseRange(str(matches[0]))
-            print "******Got match! Bust: %s, Range: %s - %s" % (
-                matches[0], min_val, max_val)
+            self.output.append(
+                "  Got bust match: %s, Range: %s - %s" % (
+                matches[0], min_val, max_val))
             #if max_val is 0 or None, it evaluates to False
             if not max_val:
                 return min_val, min_val
             return min_val, max_val
 
     def GetWaist(self):
-        # print "\n*****listing description:"
-        # print result
-        # print "*******end of description*******"
-
         for pattern in WAIST_PATTERNS:
             matches = [m.group('waist') for m in pattern.finditer(self.result)]
         # empty collections evaluate to false
             if not matches:
                 continue
             if len(matches) > 1:
-                print "*****Multiple waist matches*****: ", matches
+                self.output.append(
+                    "  Single regex got multiple waist matches: %s" % matches)
                 continue
             min_val, max_val = ParseRange(str(matches[0]))
-            print "******Got match! Waist: %s, Range: %s - %s" % (
-                matches[0], min_val, max_val)
+            self.output.append(
+                "  Got waist match: %s, Range: %s - %s" % (
+                matches[0], min_val, max_val))
             #if max_val is 0 or None, it evaluates to False
             if not max_val:
                 #if false, set max_val to min_val
@@ -153,27 +124,24 @@ class ListingParser(object):
 
     def GetHip(self):
         """Saving all open hip variations as min_val:0, and max_val: 100"""
-
-        # print "\n*****listing description:"
-        # print result
-        # print "*******end of description*******"
-
         for pattern in HIP_PATTERNS:
             matches = [m.group('hips') for m in pattern.finditer(self.result)]
         # empty collections evaluate to false
             if not matches:
                 continue
             if len(matches) > 1:
-                print "*****Multiple hip matches*****: ", matches
+                self.output.append(
+                    "  Single regex got multiple hip matches: %s" % matches)
                 continue
-            print "******Got match! Hips:******", matches[0]
+            self.output.append(
+                "  Got hips match: %s" % matches[0])
             if OPEN_RE.match(matches[0]):
-                print "******OPEN HIP MATCH*******:%s" % matches[0]
+                self.output.append("    OPEN HIP MATCH")
                 return 0, 100
             else:
                 min_val, max_val = ParseRange(str(matches[0]))
-                print "******Got match! Hip: %s, Range: %s - %s" % (
-                matches[0], min_val, max_val)
+                self.output.append(
+                    "    Range hip match: %s - %s" % (min_val, max_val))
             if not max_val:
                 #if false, set max_val to min_val
                 return min_val, min_val

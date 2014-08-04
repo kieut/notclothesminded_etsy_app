@@ -2,9 +2,9 @@
 import json, httplib2
 import urllib
 import sys
-import time
 
-mykey = 'vgmfi5108akc4ot4rthtrw08'
+with open("etsy_api_key") as f:
+    mykey = f.read().strip()
 
 def get_listings(ListingHandler, min_price, max_price):
 
@@ -37,21 +37,3 @@ def get_listings(ListingHandler, min_price, max_price):
         # for more details on what this does.
         ListingHandler(None)
     return num_queries_made
-
-
-    
-# def get_images(listing_id):
-#     parameters = urllib.urlencode({'api_key': 'vgmfi5108akc4ot4rthtrw08',
-#                 'listing_id': listing_id, 'includes': 'MainImage(url_fullxfull)'})
-#     url = '?'.join(['https://openapi.etsy.com/v2/listings/%d' % listing_id, parameters])
-#     resp, content = httplib2.Http().request(url)
-#     images = json.loads(content)
-#     print images
-
-# def get_images(listing_id):
-#     parameters = urllib.urlencode({'api_key': 'vgmfi5108akc4ot4rthtrw08',
-#             'limit': 100, 'offset': 0, 'listing_id': listing_id})
-#     url = '?'.join(['https://openapi.etsy.com/v2/listings/%d/images' % listing_id, parameters])
-#     resp, content = httplib2.Http().request(url)
-#     images = json.loads(content)
-#     return images
