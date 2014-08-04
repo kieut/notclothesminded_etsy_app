@@ -28,6 +28,7 @@ Notclothesminded's crawler makes HTTP requests to Etsy's API to retrieve active 
 3. __model.py__: Abstracts the local database model.
 
 __Project Organization Diagram__:
+![Alt text](/static/img/project_diagram.png)
 
 ###Database Tables:
 See model.py for full schema details, the purpose of each table is:
@@ -49,7 +50,7 @@ pip install -r requirements.txt
 ```
 ### Etsy API
 
-You will need to get your own Etsy API_KEY. Once you obtain one, it needs to be accessible by etsy.py.
+You will need to get your own Etsy API_KEY. Once you obtain one, put it in a file named "etsy_api_key"
 
 [Etsy API Documentation](https://www.etsy.com/developers/documentation/getting_started/api_basics)
 
