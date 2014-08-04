@@ -6,10 +6,10 @@
 			<h3>Please input your measurements in inches.</h3>
 
 			<form role="form" action="/search_results" method="POST" id="measurements">
-        <!-- Pagination, disabled for now.
-          <input type="hidden" name="limit" value="30"/>
-          <input type="hidden" name="offset" value="0"/>
-        -->
+        <!-- Pagination, disabled for now. -->
+          <input type="hidden" name="limit" id="limit" value="30"/>
+          <input type="hidden" name="offset" id="offset" value="0"/>
+       
 
 			  <div class="form-group">
 			    <label for="description" class="search-titles" >Description</label>
@@ -92,6 +92,7 @@ $(document).ready(function(){
 		// stop the form from submitting the normal way and refreshing the page
 		event.preventDefault();
 		console.log("form submitted");
+    $("#offset").val(0);
 
 		// process the form
 		$.ajax({

@@ -165,3 +165,7 @@ body {
 .form-signin {
 	font-family: 'Nothing You Could Do', Helvetica
 }
+
+.pagination {
+	clear: both;
+}

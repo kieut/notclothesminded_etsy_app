@@ -1,9 +1,6 @@
 from flask import Flask, request, session, render_template, redirect, flash
 import model
-import jinja2
 from sqlalchemy.orm.exc import NoResultFound
-import json
-# import md5
 import HTMLParser
 
 app = Flask(__name__)
@@ -88,11 +85,8 @@ def get_results():
         max_waist = int(request.form['max-waist'])
         min_hip = int(request.form['min-hip'])
         max_hip = int(request.form['max-hip'])
-        if 'limit' in request.form and 'offset' in request.form:
-            limit = int(request.form['limit'])
-            offset = int(request.form['offset'])
-        else:
-            limit = offset = None
+        limit = int(request.form['limit'])
+        offset = int(request.form['offset'])
 
         query = model.db_session.query(model.Listing).filter(
             model.Listing.min_bust <= max_bust).filter(
@@ -108,19 +102,31 @@ def get_results():
         # print query
 
         count = query.count()
-        if limit is not None and offset is not None:
-            query = query.limit(limit).offset(offset)
+
+        if count % limit == 0:
+            pages = count/limit
+        else:
+            pages = count/limit + 1
+
+        query = query.limit(limit).offset(offset)
         results = query.all()
 
         for listing in results:
             listing.title = HTMLParser.HTMLParser().unescape(listing.title)
+
+        current_page = offset/limit
 
         # count = len(results)
 
         def format_price(amount):
             return u'{0:.2f}'.format(amount)
 
-        return render_template("_search_results.html", listings = results, count = count, format_price = format_price)
+        return render_template("_search_results.html",
+            listings=results, 
+            count=count,
+            format_price=format_price,
+            pages=pages,
+            current_page=current_page)
 
     except ValueError:
         flash("Please input measurements as numbers, and fill out all fields. Thank you.")

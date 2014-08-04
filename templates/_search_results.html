@@ -66,6 +66,7 @@ jQuery.fn.sortElements = (function(){
     };
  
 })();
+
 $(document).ready(function()
 {
 	console.log("NEW PAGE");
@@ -89,31 +90,61 @@ $(document).ready(function()
 
 	<div class = "row" id = "search-content">
 
-		<!-- <div class= "col-md-8 well well-lg" id = "search_results"> -->
-
 {% for listing in listings %}
-			<!-- <div class="row"> -->
-			<!-- <div class="container" -->
-			  <div class="col-md-4 box effect" data-price="{{ listing.price }}">
-			  	<!-- can call the backref relationship to images, and get the imgs from there. -->
-			  	<!-- listing.images is from the variable I created for the relationship -->
-
-			  		<a target="_blank" href="{{ listing.listing_url }}">
-			  			<div class="img_container">
-			  				<img src="{{ listing.images[0].url_fullxfull }}" class="img-responsive img-rounded dress-img">
-			  			</div>
-			  		</a>
-			  		<div class = "listing_details">
-			  				<a target="_blank" href="{{ listing.listing_url }}">{{ listing.title }}</a>
-			  				<p>${{ format_price(listing.price) }}</p>
-			  		</div>
-			  </div>
-
-			<!-- </div> -->
-<!-- </div> -->
-
+	  <div class="col-md-4 box effect" data-price="{{ listing.price }}">
+	  	<!-- can call the backref relationship to images, and get the imgs from there. -->
+	  	<!-- listing.images is from the variable I created for the relationship -->
+	  		<a target="_blank" href="{{ listing.listing_url }}">
+	  			<div class="img_container">
+	  				<img src="{{ listing.images[0].url_fullxfull }}" class="img-responsive img-rounded dress-img">
+	  			</div>
+	  		</a>
+	  		<div class = "listing_details">
+	  				<a target="_blank" href="{{ listing.listing_url }}">{{ listing.title }}</a>
+	  				<p>${{ format_price(listing.price) }}</p>
+	  		</div>
+	  </div>
 {% endfor %}
-		<!-- </div> -->
+
+<div class="pages">
+	<ul class="pagination pagination-lg">
+		<!-- <li><a href="#">&laquo;</a></li> -->
+		{% for page in range(pages) %}
+			{% if page == current_page %}
+	  			<li class="active"><a href="#" id="page-{{ page+1 }}">{{ page+1 }}<span class="sr-only">(current)</span></a></li>
+	  		{% else %}
+	  			<li><a href="#" id="page-{{ page+1 }}">{{ page+1 }}</a></li>
+	  		{% endif %}
+		{% endfor %}
+	  	<!-- <li><a href="#">&raquo;</a></li> -->
+	</ul>
+</div>
 	</div>
+
+<!-- making separate event handler for each page button -->
+
+<script type="text/javascript">
+	{% for page in range(pages) %}
+	$("#page-{{ page+1 }}").click(function(e)
+	{
+		e.preventDefault;
+		$("#offset").val({{ page }} * $("#limit").val())
+		$.ajax({
+			"url": "/search_results",
+			"type": "POST",
+			data: $('#measurements').serialize()
+		}).done(function(data){
+			// Put the results in a div
+			// var content = $(data).find("search-content");
+			$("#results").empty().append(data);
+
+			// log the data to the console
+			console.log(data);
+		});
+
+	});
+	{% endfor %}
+
+</script>
 
 {% endblock %}
