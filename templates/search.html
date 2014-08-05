@@ -6,8 +6,8 @@
 			<h3>Please input your measurements in inches.</h3>
 
 			<form role="form" action="/search_results" method="POST" id="measurements">
-        <!-- Pagination, disabled for now. -->
-          <input type="hidden" name="limit" id="limit" value="30"/>
+
+          <input type="hidden" name="limit" id="limit" value="21"/>
           <input type="hidden" name="offset" id="offset" value="0"/>
        
 
@@ -73,6 +73,7 @@
                 <!-- </div> -->
           </div>
         </div> <!-- end of search results -->
+        <div class="modal"><!-- Place at bottom of page --></div>
        </div>
 			
 <script type="text/javascript">
@@ -90,6 +91,7 @@ $(document).ready(function(){
 		// formData = $(this).serializeArray());
 
 		// stop the form from submitting the normal way and refreshing the page
+    // if user submits a new request, reset offset to 0 so page 1 is active
 		event.preventDefault();
 		console.log("form submitted");
     $("#offset").val(0);
@@ -110,8 +112,13 @@ $(document).ready(function(){
 			console.log(data);
 		});
 
-	});
+	}); //closes submit function
 
+    $body = $("body");
+    $(document).bind({
+        ajaxStart: function() { $body.addClass("loading");    },
+         ajaxStop: function() { $body.removeClass("loading"); }    
+    });
 
 });
 
