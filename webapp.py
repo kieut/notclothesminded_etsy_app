@@ -134,52 +134,6 @@ def get_results():
 
 
 
-    # result_key = md5.new(json.dumps([title, min_bust, max_bust, min_waist, max_waist, min_hip, max_hip])).digest().encode("hex")
-
-    #session[result_key] = "lol"
-
-    #print session.viewkeys(),result_key
-
-    # if 'results' in session.keys():
-    #     #print "RESULTS IN SESSION"
-    #     if result_key in session['results']:
-    #         #print "I'M GETTING DATA FROM THE CACHE"
-    #         results = session['results'][result_key]
-    # else:
-    #     #print "I'M GETTING DATA FROM THE DATABASE"
-    #     """Need to check for exceptions, empty input fields """
-
-#     query = model.db_session.query(model.Listing).filter(model.Listing.min_bust <= max_bust).filter(model.Listing.max_bust >= min_bust)
-#     query = query.filter(model.Listing.min_waist <= max_waist).filter(model.Listing.max_waist >= min_waist)
-#     query = query.filter(model.Listing.min_hip <= max_hip).filter(model.Listing.max_hip >= min_hip)
-
-#     for word in title:
-#         #print word
-#         query = query.filter(model.Listing.title.ilike('%' + word + '%'))
-#     # print query
-
-#     results = query.all()
-
-#     for listing in results:
-#         listing.title = HTMLParser.HTMLParser().unescape(listing.title)
-
-
-#         # if 'results' not in session.keys():
-#         #     session['results'] =  {}
-
-#         # session['results'][result_key] = results
-
-#         #print session['results'][result_key]
-
-
-#     count = len(results)
-
-#     def format_price(amount):
-#         return u'{0:.2f}'.format(amount)
-
-#     return render_template("_search_results.html", listings = results, count = count, format_price = format_price)
-
-
 # @app.route("/listing_details")
 # def get_listing_detail():
 #     return render_template("listing_details.html")

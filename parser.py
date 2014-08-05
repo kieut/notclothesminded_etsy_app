@@ -14,7 +14,6 @@ BUST_PATTERNS = [
     re.compile(
         '(bust|pit|chest)[- \t:~]+[^0-9\n]*'
         '(?P<bust>' + RANGE_PAT + ')[ \t]*(in|inches|")', re.IGNORECASE),
-    #when size is listed first
     re.compile('(?P<bust>' + RANGE_PAT + ')[ \t]*(in|inches|")'
         '[^0-9\n]*(bust|pit|chest|armpit)', re.IGNORECASE),
 ]
