@@ -57,8 +57,8 @@ def convert_listing(etsy_listing, start_time):
 
 def delete_expired():
 
-    # How do you delete from a table using a join with SQLAlchemy?  This doesn't
-    # work :(  You can't delete from a join, we can't figure out how to specify
+    # Attempted deleted from a join in SQLAlchemy.  This doesn't
+    # work. You can't delete from a join, we can't figure out how to specify
     # to SQLAlchemy which table to delete from - we could do it with raw SQL,
     # but seems cleaner to do it the SQLAlchemy-friendly subquery way below.
     #model.db_session.query(model.ListingImage).join(
