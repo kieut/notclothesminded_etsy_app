@@ -37,6 +37,11 @@ See model.py for full schema details, the purpose of each table is:
 2. __images__: Stores image URLs for listings.
 2. __crawlhistory__: Stores crawl metadata for maintaining an audit trail.
 
+###User Interface:
+
+
+From the browser, the user can input a description of what they’re looking(case insensitive search) and measurements. Using AJAX and JQuery, the results are dynamically retrieved and rendered with new HTML in the same browser. I chose to do this to ensure an uninterrupted user experience. The results are presented in pages to reduce loading time, and each page link is an event handler, which when clicked, makes an AJAX request for the next set of listings. 
+
 Set up
 ------------
 ### Get the code
