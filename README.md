@@ -11,6 +11,11 @@ buyer’s unique measurements in over 200,000 active listings.  This enables buy
 search criteria quickly and without the hassle of manually scanning numerous beautiful but ill-fitting matches. 
 Users waste less time, and are connected to more meaningful results. 
 
+![Alt text](/static/img/Notclothesminded-1.png)
+
+
+![Alt text](/static/img/Notclothesminded-2.png)
+
 How it works
 ------------
 Presentation Layer:  HTML, CSS, JS, JQuery, AJAX, JSON and Bootstrap<br/>
