@@ -94,7 +94,7 @@ def get_results():
             model.Listing.min_waist <= max_waist).filter(
             model.Listing.max_waist >= min_waist).filter(
             model.Listing.min_hip <= max_hip).filter(
-            model.Listing.max_hip >= min_hip)
+            model.Listing.max_hip >= min_hip).order_by(model.Listing.etsy_listing_id)
 
         for word in title:
             #print word

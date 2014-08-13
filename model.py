@@ -6,7 +6,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, backref
 import os
 
-engine = create_engine(os.environ.get("DATABASE_URL", "sqlite:///notclothesminded.db"), echo=False)
+engine = create_engine("postgresql://localhost:5432/notclothesminded2", echo=False)
 db_session = scoped_session(sessionmaker(bind=engine,
                                       autocommit = False,
                                       autoflush = False))
@@ -25,8 +25,6 @@ class User(Base):
     surname = Column(String(64), nullable=False)
     email = Column(String(64), nullable=False)
     password = Column(String(64), nullable=False)
-    age = Column(Integer, nullable=False)
-    zipcode = Column(String(15), nullable=False)
 
 
 class Listing(Base):
@@ -83,6 +81,7 @@ class CrawlHistory(Base):
     id = Column(Integer, primary_key=True)
     timestamp = Column(Integer, nullable=False)
     total_results = Column(Integer, nullable=False)
+    recent_results = Column(Integer, nullable=False)
     matched_results = Column(Integer, nullable=False)
     prev_timestamp = Column(Integer, nullable=False)
     total_time = Column(Integer, nullable=False)

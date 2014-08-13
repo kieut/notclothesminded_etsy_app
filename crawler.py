@@ -6,8 +6,8 @@ import time
 import sys
 import traceback
 
-MIN_PRICE = 95
-MAX_PRICE = 96
+MIN_PRICE = 10
+MAX_PRICE = 250
 
 def convert_listing(etsy_listing, start_time):
     description = etsy_listing['description']
@@ -99,7 +99,7 @@ def main(db_session):
     # mutable, though, so we can use this trick to *change* the value of our
     # counters without having to *reassign* a new value to them.  In Python 3,
     # we could use the 'nonlocal' keyword to avoid having to do the list trick.
-    total_results = [0]
+    recent_results = [0]
     matched_results = [0]
     start_time = time.time()
     
@@ -120,7 +120,7 @@ def main(db_session):
             return
 
         # Otherwise we have a listing to handle, get to it!
-        total_results[0] += 1
+        recent_results[0] += 1
 
         try:
             result = convert_listing(etsy_listing, start_time)
@@ -148,13 +148,13 @@ def main(db_session):
 
     print >>sys.stderr, 'Getting listings: ', time.time()
 
-
-    num_queries_made = get_listings(HandleListing, MIN_PRICE, MAX_PRICE)
+    num_queries_made, total_results = get_listings(HandleListing, MIN_PRICE, MAX_PRICE, prev_crawl_timestamp)
     total_time = time.time() - start_time
 
     crawlhistory = model.CrawlHistory(
         timestamp=start_time,
-        total_results=total_results[0],
+        total_results=total_results,
+        recent_results=recent_results[0],
         matched_results=matched_results[0],
         prev_timestamp=prev_crawl_timestamp,
         total_time=total_time,
