@@ -143,6 +143,12 @@ def main(db_session):
                 db_session.merge(listing)
                 seen_ids.add(listing_id)
 
+            #deleting the images associated with listing_id before
+            #adding the images again to ensure that there are no duplicates
+            images_query = model.db_session.query(model.ListingImage).filter_by(
+                etsy_listing_id=listing_id)
+            images_query.delete(synchronize_session=False)
+
             for image in images:
                 db_session.add(image)
 
@@ -154,7 +160,7 @@ def main(db_session):
     crawlhistory = model.CrawlHistory(
         timestamp=start_time,
         total_results=total_results,
-        recent_results=recent_results[0],
+        # recent_results=recent_results[0],
         matched_results=matched_results[0],
         prev_timestamp=prev_crawl_timestamp,
         total_time=total_time,
