@@ -130,6 +130,7 @@ $(document).ready(function()
 	$("#page-{{ page+1 }}").click(function(e)
 	{
 		e.preventDefault;
+		// set #offset value to product of page*limit (2*21=42) of current page
 		$("#offset").val({{ page }} * $("#limit").val())
 		$.ajax({
 			"url": "/search_results",
@@ -141,7 +142,7 @@ $(document).ready(function()
 			$("#results").empty().append(data);
 
 			// log the data to the console
-			console.log(data);
+			// console.log(data);
 		});
 
 	});
