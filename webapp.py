@@ -88,6 +88,8 @@ def get_results():
         limit = int(request.form['limit'])
         offset = int(request.form['offset'])
 
+        
+
         query = model.db_session.query(model.Listing).filter(
             model.Listing.min_bust <= max_bust).filter(
             model.Listing.max_bust >= min_bust).filter(
@@ -103,10 +105,12 @@ def get_results():
 
         count = query.count()
 
+        #if count is not cleanly divisible by offset value, add 1 page
         if count % limit == 0:
-            pages = count/limit
+            total_pages = count/limit
         else:
-            pages = count/limit + 1
+            total_pages = count/limit + 1
+
 
         query = query.limit(limit).offset(offset)
         results = query.all()
@@ -114,7 +118,13 @@ def get_results():
         for listing in results:
             listing.title = HTMLParser.HTMLParser().unescape(listing.title)
 
-        current_page = offset/limit
+        current_page = (offset/limit)+1
+        print current_page
+
+        min_page = max(current_page-5, 1)
+        max_page = min(min_page+9, total_pages)+1
+
+        print min_page, max_page
 
         # count = len(results)
 
@@ -124,9 +134,12 @@ def get_results():
         return render_template("_search_results.html",
             listings=results, 
             count=count,
+            #passing function to template to format the price
             format_price=format_price,
-            pages=pages,
-            current_page=current_page)
+            total_pages=total_pages,
+            current_page=current_page,
+            min_page=min_page,
+            max_page=max_page)
 
     except ValueError:
         flash("Please input measurements as numbers, and fill out all fields. Thank you.")
