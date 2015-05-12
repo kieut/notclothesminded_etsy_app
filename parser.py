@@ -2,7 +2,7 @@ import re
 
 #pattern for all numbers, including decimals and fractions(ex. 17.5 or 17 1/2)
 NUMBER_PAT = '[0-9]+\.?[0-9]*([ \t]*[0-9]+\/[0-9]+)?'
-#Concatenates NUMBER_PAT with - and whitespaces to find any range numbers, captures only 2nd num??
+#Concatenates NUMBER_PAT with - and whitespaces to find any range numbers
 RANGE_PAT = NUMBER_PAT + '(\s*-\s*' + NUMBER_PAT + ')?'
 
 #Separates a fractional measurement into capture groups: dec, num, den
