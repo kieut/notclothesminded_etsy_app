@@ -110,23 +110,14 @@ $(document).ready(function()
 <div class="pages">
 	<ul class="pagination pagination-lg">
 		<!-- <li><a href="#">&laquo;</a></li> -->
-		{% if current_page == 0 %}
-		<li class="disabled"><a href="#">&laquo;</a></li>
-		{% else %}
-		<li><a href="#">&laquo;</a></li>
-		{% endif %}
-
-		{% for page in range(min_page, max_page) %}
+		{% for page in range(pages) %}
 			{% if page == current_page %}
-	  			<li class="active"><a href="#" id="page-{{ page }}">{{ page }}<span class="sr-only">(current)</span></a></li>
+	  			<li class="active"><a href="#" id="page-{{ page+1 }}">{{ page+1 }}<span class="sr-only">(current)</span></a></li>
 	  		{% else %}
-	  			<li><a href="#" id="page-{{ page }}">{{ page }}</a></li>
+	  			<li><a href="#" id="page-{{ page+1 }}">{{ page+1 }}</a></li>
 	  		{% endif %}
 		{% endfor %}
 	  	<!-- <li><a href="#">&raquo;</a></li> -->
-
-
-	  	<li><a href="#">&raquo;</a></li>
 	</ul>
 </div>
 	</div>
@@ -134,28 +125,8 @@ $(document).ready(function()
 <!-- making separate event handler for each page button -->
 
 <script type="text/javascript">
-// generate the previous page
-	// $("#prev").click(function(e)
-	// {
-	// 	e.preventDefault;
-	// 	// set #offset value to product of page*limit (2*21=42) of current page
-	// 	$("#offset").val({{ current_page-1 }} * $("#limit").val())
-	// 	$.ajax({
-	// 		"url": "/search_results",
-	// 		"type": "POST",
-	// 		data: $('#measurements').serialize()
-	// 	}).done(function(data){
-	// 		// Put the results in a div
-	// 		// var content = $(data).find("search-content");
-	// 		$("#results").empty().append(data);
 
-	// 		// log the data to the console
-	// 		// console.log(data);
-	// 	});
-
-	// });
-
-	{% for page in range(total_pages) %}
+	{% for page in range(pages) %}
 	$("#page-{{ page+1 }}").click(function(e)
 	{
 		e.preventDefault;
