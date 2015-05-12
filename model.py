@@ -4,9 +4,8 @@ from sqlalchemy import Column, Integer, String, Text, Float
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, backref
-import os
 
-engine = create_engine("postgresql://localhost:5432/notclothesminded2", echo=False)
+engine = create_engine("postgresql://localhost:5432/notclothesminded", echo=False)
 db_session = scoped_session(sessionmaker(bind=engine,
                                       autocommit = False,
                                       autoflush = False))
@@ -67,7 +66,7 @@ class ListingImage(Base):
 
     id = Column(Integer, primary_key=True)
 #    etsy_image_id = Column(Integer, nullable=False)
-    etsy_listing_id = Column(Integer, ForeignKey("listings.etsy_listing_id"), nullable=True)
+    etsy_listing_id = Column(Integer, ForeignKey("listings.etsy_listing_id"), nullable=True, index=True)
     # url_170x135 = Column(String(200), nullable=True)
     # url_570xN = Column(String(200), nullable=True)
     url_75x75 = Column(String(200), nullable=True)
@@ -81,7 +80,8 @@ class CrawlHistory(Base):
     id = Column(Integer, primary_key=True)
     timestamp = Column(Integer, nullable=False)
     total_results = Column(Integer, nullable=False)
-    recent_results = Column(Integer, nullable=False)
+    #In my local db copy, the column recent_results doesn't exist.
+    # recent_results = Column(Integer, nullable=False)
     matched_results = Column(Integer, nullable=False)
     prev_timestamp = Column(Integer, nullable=False)
     total_time = Column(Integer, nullable=False)
